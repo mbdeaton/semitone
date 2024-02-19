@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "semitone"
+version = "0.1.0"
+description = "Geometric representations of tones and chords"
+authors = ["Brett Deaton <brett.deaton@gmail.com>"]
+license = "GNU GPLv3"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
