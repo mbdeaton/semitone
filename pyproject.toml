@@ -8,6 +8,13 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+pandas = "^2.2.1"
+plotly = "^5.19.0"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^3.0.4"
+mypy = "^1.8.0"
+black = "^24.2.0"
 
 [build-system]
 requires = ["poetry-core"]
