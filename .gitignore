@@ -67,3 +67,6 @@ venv.bak/
 
 # pytype static type analyzer
 .pytype/
+
+# Auto-generated files
+*~
