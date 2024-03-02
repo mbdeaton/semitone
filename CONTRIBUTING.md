@@ -34,4 +34,5 @@ $ poetry shell    # activate the virtual environment
 $ code .          # open vscode within this venv
 $ poetry add X --group dev # add a dev dependency X
 $ poetry install  # install the dependencies in pyproject.toml or poetry.lock
+$ poetry install -E notebooks # install the extra dependencies for use of interactive notebooks
 ```
