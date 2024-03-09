@@ -4,12 +4,15 @@
 [Google style guide](https://google.github.io/styleguide/pyguide.html).
 To automate conformance run black and pylint, which is configured to the
 google pylintrc (with a few minor adjustments).
+
 ```bash
 $ black .  # auto-format
 $ pylint . # get style warnings
 ```
-Validation against these standards may be automated by pointing git to
+
+FUTURE: Validation against these standards may be automated by pointing git to
 our committed githooks dir:
+
 ```bash
 $ git config --local core.hooksPath .githooks/
 ```
@@ -44,3 +47,5 @@ $ poetry install  # install the dependencies in pyproject.toml or poetry.lock
 $ poetry install -E notebooks # install the extra dependencies for use of
                   # interactive notebooks
 ```
+
+**Backlog**: A list of pending tasks lives in FUTURE.md.
