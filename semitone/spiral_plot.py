@@ -30,7 +30,6 @@ class SpiralPlot:
         )
         fig = px.scatter_polar(
             df, r="freq", theta="angle", template="simple_white")
-        fig.show()
         return fig
 
     @staticmethod
