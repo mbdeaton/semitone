@@ -8,6 +8,11 @@ google pylintrc (with a few minor adjustments).
 $ black .  # auto-format
 $ pylint . # get style warnings
 ```
+Validation against these standards may be automated by pointing git to
+our committed githooks dir:
+```bash
+$ git config --local core.hooksPath .githooks/
+```
 
 **Types**: We use type hints. Check with mypy
 
