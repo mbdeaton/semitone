@@ -26,5 +26,4 @@ class TestScale(unittest.TestCase):
         for scale_type in (Chromatic, Major):
             with self.subTest(scale_type=scale_type):
                 s = scale_type(principle["name"])
-                self.assertAlmostEqual(
-                    s.principle, principle["freq"], places=2)
+                self.assertAlmostEqual(s.principle, principle["freq"], places=2)

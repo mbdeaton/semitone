@@ -24,12 +24,10 @@ class SpiralPlot:
             a plotly graph_objects.Figure
         """
         df = pd.DataFrame(
-            data=SpiralPlot.polar_coords_from_freqs(
-                scale.primaries, scale.principle),
+            data=SpiralPlot.polar_coords_from_freqs(scale.primaries, scale.principle),
             columns=("freq", "angle"),
         )
-        fig = px.scatter_polar(
-            df, r="freq", theta="angle", template="simple_white")
+        fig = px.scatter_polar(df, r="freq", theta="angle", template="simple_white")
         return fig
 
     @staticmethod
@@ -60,10 +58,8 @@ class SpiralPlot:
             principle = frequencies[0]
         if scale is None:
             scale = 1
-        radii = [SpiralPlot.radius_from_freq(
-            f, principle, scale) for f in frequencies]
-        angles = [SpiralPlot.angle_from_freq(
-            f, principle) for f in frequencies]
+        radii = [SpiralPlot.radius_from_freq(f, principle, scale) for f in frequencies]
+        angles = [SpiralPlot.angle_from_freq(f, principle) for f in frequencies]
         return zip(radii, angles)
 
     @staticmethod
@@ -95,8 +91,7 @@ class SpiralPlot:
             the computed angle in degrees (float)
         """
         # compute in standard physics coords: radians, 0 is east, increase CCW
-        angle = math.log(principle / frequency) / \
-            SpiralPlot._B_ANGLE + math.pi / 2
+        angle = math.log(principle / frequency) / SpiralPlot._B_ANGLE + math.pi / 2
         if angle < 0 or angle >= 2 * math.pi:
             angle = angle % (2 * math.pi)
         # convert to plotly polar plot coords: degrees, 0 is north, increase CW
