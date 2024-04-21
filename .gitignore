@@ -70,3 +70,6 @@ venv.bak/
 
 # Auto-generated files
 *~
+
+# Artifacts
+*.png
