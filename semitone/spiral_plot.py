@@ -15,7 +15,7 @@ class SpiralPlot:
 
     @staticmethod
     def draw(scale: Scale) -> graph_objects.Figure:
-        """Render the spiral represenation of the scale in a polar plot.
+        """Render the spiral representation of the scale in a polar plot.
 
         Args:
             scale (Scale): the Scale from which to build the spiral
