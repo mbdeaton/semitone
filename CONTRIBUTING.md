@@ -6,8 +6,8 @@ To automate conformance run black and pylint, which is configured to the
 google pylintrc (with a few minor adjustments).
 
 ```bash
-$ black .  # auto-format
-$ pylint . # get style warnings
+$ black --line-length 80 .  # auto-format
+$ pylint .                  # get style warnings
 ```
 
 FUTURE: Validation against these standards may be automated by pointing git to
