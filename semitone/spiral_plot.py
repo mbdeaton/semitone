@@ -6,6 +6,7 @@ import plotly.express as px
 from plotly import graph_objects
 import pandas as pd
 from semitone.scale import Scale
+from semitone.equal_tempered import EqualTempered
 
 
 class SpiralPlot:
@@ -27,10 +28,26 @@ class SpiralPlot:
             data=SpiralPlot.polar_coords_from_freqs(
                 scale.primaries, scale.principle
             ),
-            columns=("freq", "angle"),
+            columns=("wavelength", "angle"),
         )
         fig = px.scatter_polar(
-            df, r="freq", theta="angle", template="simple_white"
+            df, r="wavelength", theta="angle", template="simple_white"
+        )
+        max_rad = max(df["wavelength"])
+        fig.update_layout(
+            template=None,
+            polar=dict(
+                radialaxis=dict(
+                    range=[0, max_rad],
+                    showticklabels=False,
+                    showgrid=False,
+                    ticks="",
+                ),
+                angularaxis=dict(
+                    tickvals=tuple(range(0, 360, 30)),
+                    ticktext=EqualTempered.note_names_including_enharmonics(),
+                ),
+            ),
         )
         return fig
 
