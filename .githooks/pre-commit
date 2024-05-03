@@ -22,7 +22,7 @@ fi
 exec git diff-index --check --cached $against --
 
 # If there formatting doesn't conform to our standard
-exec black --check
+exec black --line-length 80 --check
 
 # If syntax doesn't conform to our standard
 exec pylint
