@@ -7,6 +7,7 @@ from plotly import graph_objects
 import pandas as pd
 from semitone.scale import Scale
 from semitone.equal_tempered import EqualTempered
+from semitone.extender import Extender
 
 
 class SpiralPlot:
@@ -15,18 +16,22 @@ class SpiralPlot:
     _B_ANGLE = math.log(2) / 2 / math.pi  # scale for angle calculations
 
     @staticmethod
-    def draw(scale: Scale) -> graph_objects.Figure:
+    def draw(
+        scale: Scale, octaves_below: int = 0, octaves_above: int = 0
+    ) -> graph_objects.Figure:
         """Render the spiral representation of the scale in a polar plot.
 
         Args:
             scale (Scale): the Scale from which to build the spiral
-
+            octaves_below, octaves_above (int): how many octaves to extend
+                outside the primary scale; defaults = don't extend
         Returns:
             a plotly graph_objects.Figure
         """
         df = pd.DataFrame(
             data=SpiralPlot.polar_coords_from_freqs(
-                scale.primaries, scale.principle
+                Extender.extend(scale, octaves_below, octaves_above),
+                scale.principle,
             ),
             columns=("wavelength", "angle"),
         )
