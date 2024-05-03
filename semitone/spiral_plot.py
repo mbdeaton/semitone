@@ -45,7 +45,9 @@ class SpiralPlot:
                 ),
                 angularaxis=dict(
                     tickvals=tuple(range(0, 360, 30)),
-                    ticktext=EqualTempered.note_names_including_enharmonics(),
+                    ticktext=EqualTempered(
+                        scale.key_name
+                    ).note_names_including_enharmonics(),
                 ),
             ),
         )

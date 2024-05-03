@@ -38,16 +38,17 @@ class EqualTempered(Scale):
         self.key_name = key_name
         self.principle = self.freq_from_name(self.key_name)
 
-    @staticmethod
-    def note_names_including_enharmonics() -> list[str]:
+    def note_names_including_enharmonics(self) -> list[str]:
         """Return the names of the traditional western notes starting from C
 
         Returns:
-            the following list of length 12: ['C', 'Db/C#', 'D', ...]
+            the list of length 12 of all note names in the scale, for example
+            for the key of C: ['C', 'Db/C#', 'D', ...]
         """
-        return [
-            "/".join(enharmonics) for enharmonics in EqualTempered._SPELLINGS
-        ]
+        offset = self.find_chromatic_index(self.key_name)
+        below = self._SPELLINGS[:offset]
+        above = self._SPELLINGS[offset:]
+        return ["/".join(enharmonics) for enharmonics in above + below]
 
     @staticmethod
     def ith_freq_from_primary(key_center: float, i: int) -> float:

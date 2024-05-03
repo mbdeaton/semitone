@@ -13,6 +13,7 @@ class Scale:
     _A440 = 440  # reference wrt to int'l standard pitch, A4=440 Hz, aka A440
 
     def __init__(self) -> None:
+        self.key_name: str = ""
         self.primaries: Sequence[float] = ()
         self.principle: float = 0
 
