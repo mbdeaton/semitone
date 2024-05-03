@@ -23,5 +23,8 @@ class TestDraw(unittest.TestCase):
             )
             # mod 360, to normalize all angles to the range [0,360) deg
             self.assertAlmostEqual(
-                expected[1] % 360, seen[1] % 360, places=5, msg=f"Error in {i}th angle"
+                expected[1] % 360,
+                seen[1] % 360,
+                places=5,
+                msg=f"Error in {i}th angle",
             )
