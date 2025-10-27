@@ -3,6 +3,7 @@
 # TODO make it so you only import Scale
 from semitone.chromatic import Chromatic
 from semitone.major import Major
+from semitone.minor import Minor
 import unittest
 
 
@@ -23,7 +24,7 @@ class TestScale(unittest.TestCase):
 
     def test_compute_principle_of_equal_tempered_scales_as_expected(self):
         principle = {"name": "C", "freq": 261.63}
-        for scale_type in (Chromatic, Major):
+        for scale_type in (Chromatic, Major, Minor):
             with self.subTest(scale_type=scale_type):
                 s = scale_type(principle["name"])
                 self.assertAlmostEqual(s.principle, principle["freq"], places=2)
