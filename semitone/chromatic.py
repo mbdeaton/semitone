@@ -9,6 +9,7 @@ class Chromatic(EqualTempered):
     def __init__(self, key_name: str) -> None:
         """Initialize. See args for EqualTempered."""
         super().__init__(key_name)
+        self.scale_name = f"{key_name} chrom"
         self.primaries = tuple(
             self.ith_freq_from_primary(self.principle, i) for i in range(12)
         )

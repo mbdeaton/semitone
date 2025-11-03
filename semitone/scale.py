@@ -14,6 +14,7 @@ class Scale:
 
     def __init__(self) -> None:
         self.key_name: str = ""
+        self.scale_name: str = ""
         self.primaries: Sequence[float] = ()
         self.principle: float = 0
 

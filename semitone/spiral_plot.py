@@ -123,7 +123,7 @@ class SpiralPlot:
         freqs = Extender.extend(scale, octaves_below, octaves_above)
         coords = SpiralPlot.polar_coords_from_freqs(freqs, scale.principle)
         df = pd.DataFrame(coords, columns=("wavelength", "angle"))
-        df["name"] = scale.key_name
+        df["name"] = scale.scale_name
         return df
 
     @staticmethod
