@@ -71,28 +71,35 @@ class SpiralPlot:
         scales: list[Scale],
         octaves_below: int,
         octaves_above: int,
+        radial_separation: float = 1.01,
     ) -> pd.DataFrame:
         """Return a combined dataframe of polar plot data for multiple scales.
 
         Each input Scale is first expanded by the requested number of octaves,
         converted to polar coordinates, and then concatenated into a single
-        dataframe suitable for plotting.
+        dataframe suitable for plotting.  A small radial rescaling is applied
+        to every scale after the first so identical tones do not perfectly
+        overlap on the plot.
 
         Args:
             scales (list[Scale]): the set of scales to convert
             octaves_below, octaves_above (int): how many octaves to extend
                 outside each primary scale; defaults = don't extend
+            radial_separation (float): multiplicative factor applied to the
+                radii of each scale after the first; default = 1.01
 
         Returns:
-            For structure of pandas.DataFrame see generate_dataframes
+            For structure of pandas.DataFrame see generate_data_for_one_scale
         """
         frames = []
-        for scale in scales:
-            frames.append(
-                SpiralPlot.generate_data_for_one_scale(
-                    scale, octaves_below, octaves_above
-                )
+        for i, scale in enumerate(scales):
+            df = SpiralPlot.generate_data_for_one_scale(
+                scale, octaves_below, octaves_above
             )
+            if i > 0:  # apply slight radial offset to distinguish overlaps
+                df["wavelength"] *= radial_separation ** i
+            frames.append(df)
+
         return pd.concat(frames, ignore_index=True)
 
     @staticmethod
