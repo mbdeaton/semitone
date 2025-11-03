@@ -16,7 +16,7 @@ class TestDraw(unittest.TestCase):
             [pow(0.5, i / 12) for i in range(12)],  # r
             [min_angle_deg * i for i in range(12)],  # theta
         )
-        fig = SpiralPlot.draw(scale)  # a tuple of plots
+        fig = SpiralPlot.draw([scale])  # a tuple of plots
         points_seen = zip(fig.data[0].r, fig.data[0].theta)
         for i, (expected, seen) in enumerate(zip(points_expected, points_seen)):
             self.assertAlmostEqual(
