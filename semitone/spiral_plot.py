@@ -11,36 +11,44 @@ from semitone.extender import Extender
 
 
 class SpiralPlot:
-    """The graphical representation of a scale as a logarithmic spiral."""
+    """The graphical depiction of one or more scales as logarithmic spirals."""
 
     _B_ANGLE = math.log(2) / 2 / math.pi  # scale for angle calculations
 
     @staticmethod
     def draw(
-        scale: Scale, octaves_below: int = 0, octaves_above: int = 0
+        scales: list[Scale],
+        octaves_below: int = 0,
+        octaves_above: int = 0,
     ) -> graph_objects.Figure:
-        """Render the spiral representation of the scale in a polar plot.
+        """Render the spiral representation of scale(s) in a polar plot.
 
         Args:
-            scale (Scale): the Scale from which to build the spiral
+            scales (list[Scale]): one or more scales to plot,
+                with the primary of the first Scale setting the overall key
             octaves_below, octaves_above (int): how many octaves to extend
-                outside the primary scale; defaults = don't extend
+                outside each primary scale; defaults = don't extend
         Returns:
             a plotly graph_objects.Figure
         """
-        df = pd.DataFrame(
-            data=SpiralPlot.polar_coords_from_freqs(
-                Extender.extend(scale, octaves_below, octaves_above),
-                scale.principle,
-            ),
-            columns=("wavelength", "angle"),
+        big_df = SpiralPlot.generate_data_for_all_scales(
+            scales, octaves_below, octaves_above
         )
+
         fig = px.scatter_polar(
-            df, r="wavelength", theta="angle", template="simple_white"
+            big_df,
+            r="wavelength",
+            theta="angle",
+            color="name",
+            template="simple_white",
+            hover_name="name",
         )
-        max_rad = max(df["wavelength"])
+
+        key = scales[0].key_name
+        max_rad = big_df["wavelength"].max()
         fig.update_layout(
             template=None,
+            legend_title_text="Scale",
             polar=dict(
                 radialaxis=dict(
                     range=[0, max_rad],
@@ -51,12 +59,72 @@ class SpiralPlot:
                 angularaxis=dict(
                     tickvals=tuple(range(0, 360, 30)),
                     ticktext=EqualTempered(
-                        scale.key_name
+                        key
                     ).note_names_including_enharmonics(),
                 ),
             ),
         )
         return fig
+
+    @staticmethod
+    def generate_data_for_all_scales(
+        scales: list[Scale],
+        octaves_below: int,
+        octaves_above: int,
+    ) -> pd.DataFrame:
+        """Return a combined dataframe of polar plot data for multiple scales.
+
+        Each input Scale is first expanded by the requested number of octaves,
+        converted to polar coordinates, and then concatenated into a single
+        dataframe suitable for plotting.
+
+        Args:
+            scales (list[Scale]): the set of scales to convert
+            octaves_below, octaves_above (int): how many octaves to extend
+                outside each primary scale; defaults = don't extend
+
+        Returns:
+            For structure of pandas.DataFrame see generate_dataframes
+        """
+        frames = []
+        for scale in scales:
+            frames.append(
+                SpiralPlot.generate_data_for_one_scale(
+                    scale, octaves_below, octaves_above
+                )
+            )
+        return pd.concat(frames, ignore_index=True)
+
+    @staticmethod
+    def generate_data_for_one_scale(
+        scale: Scale,
+        octaves_below: int,
+        octaves_above: int,
+    ) -> pd.DataFrame:
+        """Return a dataframe of polar-plot data for a single scale.
+
+        The scale is extended above and/or below its primary octave, the
+        resulting frequencies are converted to polar coordinates, and the data
+        are returned in tabular form.
+
+        Args:
+            scale (Scale): the scale from which to build the dataframe
+            octaves_below, octaves_above (int): how many octaves to extend
+                outside the primary scale; defaults = don't extend
+
+        Returns:
+            pandas.DataFrame with one row per tone in the (possibly extended)
+            scale, having the following columns:
+
+                wavelength (float) : radial coordinate of the tone
+                angle      (float) : angular coordinate of the tone, in degrees
+                name       (str)   : the key name of the Scale
+        """
+        freqs = Extender.extend(scale, octaves_below, octaves_above)
+        coords = SpiralPlot.polar_coords_from_freqs(freqs, scale.principle)
+        df = pd.DataFrame(coords, columns=("wavelength", "angle"))
+        df["name"] = scale.key_name
+        return df
 
     @staticmethod
     def polar_coords_from_freqs(
