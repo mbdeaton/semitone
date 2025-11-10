@@ -1,0 +1,30 @@
+name: Style
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  style-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.7.1
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+      - name: Install dependencies (Poetry)
+        run: poetry install --no-interaction
+      - name: Run black (check + diff)
+        run: poetry run black --check --diff --line-length 80 .
+      - name: Run pylint (semitone package)
+        run: poetry run pylint semitone

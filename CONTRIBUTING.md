@@ -48,4 +48,7 @@ $ poetry install -E notebooks # install the extra dependencies for use of
                   # interactive notebooks
 ```
 
+**Continuous Integration**: We use GitHub Actions to automatically run tests
+and style checks/linting on every push and pull request to the `main` branch.
+
 **Backlog**: A list of pending tasks lives in FUTURE.md.
