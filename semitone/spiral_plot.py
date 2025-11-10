@@ -97,7 +97,7 @@ class SpiralPlot:
                 scale, octaves_below, octaves_above
             )
             if i > 0:  # apply slight radial offset to distinguish overlaps
-                df["wavelength"] *= radial_separation ** i
+                df["wavelength"] *= radial_separation**i
             frames.append(df)
 
         return pd.concat(frames, ignore_index=True)
