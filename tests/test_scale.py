@@ -46,13 +46,16 @@ class TestScale(unittest.TestCase):
         if scale_1.principle > scale_2.principle:
             scale_1, scale_2 = scale_2, scale_1
 
-        min_tone = scale_1.principle
+        min_tone = min(scale_1.primaries)
+        max_tone = max(scale_1.primaries)
         scale_2_primaries = []
         for tone in scale_2.primaries:
             while tone < min_tone:
                 tone *= 2
+            while tone > max_tone:
+                tone /= 2
             scale_2_primaries.append(tone)
         scale_2_primaries = tuple(sorted(scale_2_primaries))
 
         for note_1, note_2 in zip(scale_1.primaries, scale_2_primaries):
-            self.assertAlmostEqual(note_1, note_2, places=2)
+            self.assertAlmostEqual(note_1, note_2, places=7)
