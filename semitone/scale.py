@@ -20,3 +20,6 @@ class Scale:
 
     def __str__(self) -> str:
         return " ".join([f"{freq:.2f}" for freq in self.primaries])
+
+    def __repr__(self) -> str:
+        return str(self)
