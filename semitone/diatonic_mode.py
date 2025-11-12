@@ -1,5 +1,6 @@
 """DiatonicMode: an equal-tempered scale."""
 
+from semitone.tone import Tone
 from semitone.equal_tempered import EqualTempered
 
 
@@ -29,7 +30,7 @@ class DiatonicMode(EqualTempered):
 
         self.scale_name = f"{key_name} {DiatonicMode._MODE_NAMES[mode-1]}"
         self.primaries = tuple(
-            self.ith_freq_from_primary(self.principle, i)
+            Tone(self.ith_freq_from_primary(self.principle.freq, i))
             for i in self.steps_from_mode(mode)
         )
 
