@@ -55,7 +55,7 @@ class TestScale(unittest.TestCase):
             while tone > max_tone:
                 tone /= 2
             scale_2_primaries.append(tone)
-        scale_2_primaries = tuple(sorted(scale_2_primaries))
+        scale_2_primaries = sorted(scale_2_primaries)
 
         for note_1, note_2 in zip(scale_1.primaries, scale_2_primaries):
             self.assertAlmostEqual(note_1, note_2, places=7)
