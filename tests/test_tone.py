@@ -7,7 +7,7 @@ from semitone.tone import Tone
 class TestTone(unittest.TestCase):
     """Feature tests for the Tone class."""
 
-    DELTA_CENTS = 0.01  # allowable frequency difference in cents for equality
+    DELTA_CENTS = 0.1  # allowable frequency difference in cents for equality
     JITTER_CENTS = 1e-10  # extra amount to ensure equality/inequality
     BASE_FREQ = 440.0
 

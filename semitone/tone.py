@@ -8,14 +8,14 @@ class Tone:
     comparison, scaled by DELTA_CENTS, to allow small floating point variation.
     """
 
-    DELTA_CENTS = 0.01  # allowable frequency difference in cents for equality
+    DELTA_CENTS = 0.1  # allowable frequency difference in cents for equality
 
     def __init__(self, freq: float) -> None:
         self.freq = freq
         self._delta = self.freq * self.DELTA_CENTS / 1200
 
     def __str__(self) -> str:
-        return str(self.freq)
+        return f"{self.freq:.2f}"
 
     def __repr__(self) -> str:
         return str(self)
