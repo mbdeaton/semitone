@@ -1,5 +1,6 @@
 """Chromatic: an equal-tempered scale."""
 
+from semitone.tone import Tone
 from semitone.equal_tempered import EqualTempered
 
 
@@ -11,7 +12,8 @@ class Chromatic(EqualTempered):
         super().__init__(key_name)
         self.scale_name = f"{key_name} chrom"
         self.primaries = tuple(
-            self.ith_freq_from_primary(self.principle, i) for i in range(12)
+            Tone(self.ith_freq_from_primary(self.principle.freq, i))
+            for i in range(12)
         )
 
     def note_names(self) -> list[str]:

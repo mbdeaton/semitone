@@ -1,6 +1,7 @@
 """Feature: Generate and manipulate sequences of tones aka scales."""
 
 # TODO make it so you only import Scale
+from semitone.tone import Tone
 from semitone.scale import Scale
 from semitone.chromatic import Chromatic
 from semitone.major import Major
@@ -20,42 +21,27 @@ class TestScale(unittest.TestCase):
         for scale, init in scales_and_inits:
             with self.subTest(scale=scale, initializer=init):
                 s = scale(init)
-                self.assertIsInstance(s.principle, float)
+                self.assertIsInstance(s.principle.freq, float)
                 for tone in s.primaries:
-                    self.assertIsInstance(tone, float)
+                    self.assertIsInstance(tone.freq, float)
 
     def test_compute_principle_of_equal_tempered_scales_as_expected(self):
-        principle = {"name": "C", "freq": 261.63}
+        principle = {"name": "C", "principle tone": Tone(261.626)}
         for scale_type in (Chromatic, Major, Minor):
             with self.subTest(scale_type=scale_type):
                 s = scale_type(principle["name"])
-                self.assertAlmostEqual(s.principle, principle["freq"], places=2)
+                self.assertEqual(s.principle, principle["principle tone"])
 
     def test_compare_primaries_of_synonymous_scales(self):
         self.assertScalesUseSameNotes(Major("C"), Minor("A"))
         self.assertScalesUseSameNotes(Major("C"), DiatonicMode("C", 1))
 
     def assertScalesUseSameNotes(self, scale_1: Scale, scale_2: Scale) -> None:
-        """Assert two Scales are played with the same keys on the keyboard.
+        """Assert two Scales are played with the same keys on the keyboard."""
+        for t1 in scale_1.primaries:
+            if not any(t1.octave_equivalent(t2) for t2 in scale_2.primaries):
+                self.fail(f"{t1} not found in Scale {scale_2}")
 
-        If one scale starts on a lower tone, then it is windowed to the higher
-        scale by pitching too-low tones up by one or more octaves. So, for
-        example, if scale_1 is C maj and scale_2 is A min, the first two tones
-        of A min are shifted up by an octave.
-        """
-        if scale_1.principle > scale_2.principle:
-            scale_1, scale_2 = scale_2, scale_1
-
-        min_tone = min(scale_1.primaries)
-        max_tone = max(scale_1.primaries)
-        scale_2_primaries = []
-        for tone in scale_2.primaries:
-            while tone < min_tone:
-                tone *= 2
-            while tone > max_tone:
-                tone /= 2
-            scale_2_primaries.append(tone)
-        scale_2_primaries = sorted(scale_2_primaries)
-
-        for note_1, note_2 in zip(scale_1.primaries, scale_2_primaries):
-            self.assertAlmostEqual(note_1, note_2, places=7)
+        for t2 in scale_2.primaries:
+            if not any(t2.octave_equivalent(t1) for t1 in scale_1.primaries):
+                self.fail(f"{t2} not found in Scale {scale_1}")

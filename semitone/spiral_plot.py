@@ -5,6 +5,7 @@ from typing import Iterable, Sequence
 import plotly.express as px
 from plotly import graph_objects
 import pandas as pd
+from semitone.tone import Tone
 from semitone.scale import Scale
 from semitone.equal_tempered import EqualTempered
 from semitone.extender import Extender
@@ -135,8 +136,8 @@ class SpiralPlot:
 
     @staticmethod
     def polar_coords_from_freqs(
-        frequencies: Sequence[float],
-        principle: float | None = None,
+        tones: Sequence[Tone],
+        principle: Tone | None = None,
         scale: float | None = None,
     ) -> Iterable[tuple[float, float]]:
         """Return polar coords of spiral positions from a given set of tones.
@@ -147,8 +148,8 @@ class SpiralPlot:
         above the principle returning to 12 o'clock.
 
         Args:
-            frequencies (sequence(float)): frequencies of the tones to calculate
-            principle (float): the home frequency to be plotted at 12
+            frequencies (sequence(Tone)): frequencies of the tones to calculate
+            principle (Tone): the home frequency to be plotted at 12
                 o'clock; default is first frequency in the sequence of first arg
             scale (float): the radius to rescale the principle wavelength
                 default=1
@@ -158,14 +159,16 @@ class SpiralPlot:
             of the input frequencies
         """
         if principle is None:
-            principle = frequencies[0]
+            principle = tones[0]
         if scale is None:
             scale = 1
         radii = [
-            SpiralPlot.radius_from_freq(f, principle, scale)
-            for f in frequencies
+            SpiralPlot.radius_from_freq(t.freq, principle.freq, scale)
+            for t in tones
         ]
-        angles = [SpiralPlot.angle_from_freq(f, principle) for f in frequencies]
+        angles = [
+            SpiralPlot.angle_from_freq(t.freq, principle.freq) for t in tones
+        ]
         return zip(radii, angles)
 
     @staticmethod

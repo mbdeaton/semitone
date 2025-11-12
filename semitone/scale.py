@@ -1,6 +1,7 @@
 """Scale: the base of the hierarchy."""
 
 from typing import Sequence
+from semitone.tone import Tone
 
 
 class Scale:
@@ -15,8 +16,11 @@ class Scale:
     def __init__(self) -> None:
         self.key_name: str = ""
         self.scale_name: str = ""
-        self.primaries: Sequence[float] = ()
-        self.principle: float = 0
+        self.primaries: Sequence[Tone] = ()
+        self.principle: Tone = Tone(0.0)
 
     def __str__(self) -> str:
-        return " ".join([f"{freq:.2f}" for freq in self.primaries])
+        return " ".join([f"{tone}" for tone in self.primaries])
+
+    def __repr__(self) -> str:
+        return str(self)

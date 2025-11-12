@@ -1,5 +1,6 @@
 """EqualTempered: a scale on a grid."""
 
+from semitone.tone import Tone
 from semitone.scale import Scale
 
 
@@ -36,7 +37,7 @@ class EqualTempered(Scale):
         """
         super().__init__()
         self.key_name = key_name
-        self.principle = self.freq_from_name(self.key_name)
+        self.principle = Tone(self.freq_from_name(self.key_name))
 
     def note_names_including_enharmonics(self) -> list[str]:
         """Return the names of the traditional western notes starting from C
