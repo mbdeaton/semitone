@@ -7,8 +7,10 @@ on:
     branches: [main]
 
 jobs:
-  style-lint:
+  style-lint-type:
     runs-on: ubuntu-latest
+    env:
+      CHECK_DIRS: "semitone tests demos"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,7 +26,9 @@ jobs:
           virtualenvs-in-project: true
       - name: Install dependencies (Poetry)
         run: poetry install --no-interaction
-      - name: Run black (check + diff)
-        run: poetry run black --check --diff --line-length 80 .
-      - name: Run pylint (semitone package)
-        run: poetry run pylint semitone
+      - name: Run code formatter (Black)
+        run: poetry run black --check --diff --line-length 80 $CHECK_DIRS
+      - name: Run static code linter (Pylint)
+        run: poetry run pylint $CHECK_DIRS
+      - name: Run static type checker (Mypy)
+        run: poetry run mypy --ignore-missing-imports $CHECK_DIRS
