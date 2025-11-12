@@ -7,23 +7,21 @@ from semitone.tone import Tone
 class TestTone(unittest.TestCase):
     """Feature tests for the Tone class."""
 
-    _delta_cents = 0.01  # allowable frequency difference in cents for equality
-    _jitter_cents = 1e-10  # extra amount to ensure equality/inequality
-    _base_freq = 440.0
+    DELTA_CENTS = 0.01  # allowable frequency difference in cents for equality
+    JITTER_CENTS = 1e-10  # extra amount to ensure equality/inequality
+    BASE_FREQ = 440.0
 
     def test_compare_slightly_different_tones_expect_equal(self):
         """Tones differing less than accepted delta should compare equal."""
 
-        delta = (
-            self._base_freq * (self._delta_cents - self._jitter_cents) / 1200
-        )
+        delta = self.BASE_FREQ * (self.DELTA_CENTS - self.JITTER_CENTS) / 1200
 
-        base_tone = Tone(self._base_freq)
+        base_tone = Tone(self.BASE_FREQ)
 
         varying_tones = (
-            Tone(self._base_freq),
-            Tone(self._base_freq - delta),
-            Tone(self._base_freq + delta),
+            Tone(self.BASE_FREQ),
+            Tone(self.BASE_FREQ - delta),
+            Tone(self.BASE_FREQ + delta),
         )
 
         for tone in varying_tones:
@@ -33,15 +31,13 @@ class TestTone(unittest.TestCase):
     def test_compare_slightly_different_tones_expect_unequal(self):
         """Tones differing more than accepted delta should compare unequal."""
 
-        delta = (
-            self._base_freq * (self._delta_cents + self._jitter_cents) / 1200
-        )
+        delta = self.BASE_FREQ * (self.DELTA_CENTS + self.JITTER_CENTS) / 1200
 
-        base_tone = Tone(self._base_freq)
+        base_tone = Tone(self.BASE_FREQ)
 
         varying_tones = (
-            Tone(self._base_freq - delta),
-            Tone(self._base_freq + delta),
+            Tone(self.BASE_FREQ - delta),
+            Tone(self.BASE_FREQ + delta),
         )
 
         for tone in varying_tones:
