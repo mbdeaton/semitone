@@ -2,25 +2,13 @@
 
 **Style**: We conform to PEP-8 and where that is silent we follow the
 [Google style guide](https://google.github.io/styleguide/pyguide.html).
-To automate conformance run black and pylint, which is configured to the
-google pylintrc (with a few minor adjustments).
+We also use type hints. To automate conformance run black, pylint, and mypy.
+Pylint is configured to the google pylintrc (with a few minor adjustments).
 
 ```bash
-$ black --line-length 80 .  # auto-format
-$ pylint .                  # get style warnings
-```
-
-FUTURE: Validation against these standards may be automated by pointing git to
-our committed githooks dir:
-
-```bash
-$ git config --local core.hooksPath .githooks/
-```
-
-**Types**: We use type hints. Check with mypy
-
-```bash
-$ mypy blah.py --ignore-missing-imports --ignore-used-before
+$ black --line-length 80 .        # format to style
+$ pylint .                        # get linting warnings
+$ mypy --ignore-missing-imports . # get type-hinting warnings
 ```
 
 **Testing**: We use the unittest framework. Tests are all feature tests,
@@ -33,6 +21,9 @@ tests invoke
 $ python -m unittest -v          # play all tests
 $ python -m unittest -v testname # play one test
 ```
+
+**Continuous Integration**: We use GitHub Actions to automatically run tests
+and style checks/linting on every push and pull request to the `main` branch.
 
 **Dependency Management**: We use poetry. Some common gestures:
 
@@ -47,8 +38,5 @@ $ poetry install  # install the dependencies in pyproject.toml or poetry.lock
 $ poetry install -E notebooks # install the extra dependencies for use of
                   # interactive notebooks
 ```
-
-**Continuous Integration**: We use GitHub Actions to automatically run tests
-and style checks/linting on every push and pull request to the `main` branch.
 
 **Backlog**: A list of pending tasks lives in FUTURE.md.
