@@ -6,6 +6,6 @@ from semitone.extender import Extender
 
 # This is intended to be scratch code to be modified for debugging purposes
 scale = Major("Bb")
-print(scale.primaries)
+print(scale)
 fig = SpiralPlot.draw((scale,))
 print(Extender.extend(scale, octaves_below=0, octaves_above=0))
