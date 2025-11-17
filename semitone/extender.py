@@ -1,6 +1,5 @@
 """Extender"""
 
-from typing import Sequence
 from semitone.tone import Tone
 from semitone.scale import Scale
 
@@ -9,9 +8,7 @@ class Extender:
     """Extends the primary tones of a scale to higher or lower octaves."""
 
     @staticmethod
-    def extend(
-        scale: Scale, octaves_below: int, octaves_above: int
-    ) -> Sequence[Tone]:
+    def extend(scale: Scale, octaves_below: int, octaves_above: int) -> Scale:
         """Return the scale extended to additional octaves
 
         Args:
@@ -25,4 +22,6 @@ class Extender:
             tones.extend(
                 [Tone(multiplier * tone.freq) for tone in scale.primaries]
             )
-        return tones
+        new_scale = scale
+        new_scale.primaries = tuple(tones)
+        return new_scale

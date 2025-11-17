@@ -1,7 +1,7 @@
 """SpiralPlot"""
 
 import math
-from typing import Iterable, Sequence
+from typing import Iterable
 import plotly.express as px
 from plotly import graph_objects
 import pandas as pd
@@ -18,7 +18,7 @@ class SpiralPlot:
 
     @staticmethod
     def draw(
-        scales: list[Scale],
+        scales: tuple[Scale, ...],
         octaves_below: int = 0,
         octaves_above: int = 0,
     ) -> graph_objects.Figure:
@@ -69,7 +69,7 @@ class SpiralPlot:
 
     @staticmethod
     def generate_data_for_all_scales(
-        scales: list[Scale],
+        scales: tuple[Scale, ...],
         octaves_below: int,
         octaves_above: int,
         radial_separation: float = 1.01,
@@ -129,16 +129,18 @@ class SpiralPlot:
                 name       (str)   : the key name of the Scale
         """
         freqs = Extender.extend(scale, octaves_below, octaves_above)
-        coords = SpiralPlot.polar_coords_from_freqs(freqs, scale.principle)
+        coords = SpiralPlot.polar_coords_from_freqs(
+            freqs.primaries, scale.principle
+        )
         df = pd.DataFrame(coords, columns=("wavelength", "angle"))
         df["name"] = scale.scale_name
         return df
 
     @staticmethod
     def polar_coords_from_freqs(
-        tones: Sequence[Tone],
+        tones: tuple[Tone, ...],
         principle: Tone | None = None,
-        scale: float | None = None,
+        scaling_factor: float | None = None,
     ) -> Iterable[tuple[float, float]]:
         """Return polar coords of spiral positions from a given set of tones.
 
@@ -160,10 +162,10 @@ class SpiralPlot:
         """
         if principle is None:
             principle = tones[0]
-        if scale is None:
-            scale = 1
+        if scaling_factor is None:
+            scaling_factor = 1
         radii = [
-            SpiralPlot.radius_from_freq(t.freq, principle.freq, scale)
+            SpiralPlot.radius_from_freq(t.freq, principle.freq, scaling_factor)
             for t in tones
         ]
         angles = [
@@ -173,7 +175,7 @@ class SpiralPlot:
 
     @staticmethod
     def radius_from_freq(
-        frequency: float, principle: float, scale: float
+        frequency: float, principle: float, scaling_factor: float
     ) -> float:
         """Convert a frequency to a scaled wavelength.
 
@@ -185,7 +187,7 @@ class SpiralPlot:
         Returns:
             the computed radius (float)
         """
-        return scale * principle / frequency
+        return scaling_factor * principle / frequency
 
     @staticmethod
     def angle_from_freq(frequency: float, principle: float) -> float:

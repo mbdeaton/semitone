@@ -1,6 +1,5 @@
 """Scale: the base of the hierarchy."""
 
-from typing import Sequence
 from semitone.tone import Tone
 
 
@@ -16,7 +15,7 @@ class Scale:
     def __init__(self) -> None:
         self.key_name: str = ""
         self.scale_name: str = ""
-        self.primaries: Sequence[Tone] = ()
+        self.primaries: tuple[Tone, ...] = ()
         self.principle: Tone = Tone(0.0)
 
     def __str__(self) -> str:
