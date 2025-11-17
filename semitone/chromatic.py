@@ -16,7 +16,7 @@ class Chromatic(EqualTempered):
             for i in range(12)
         )
 
-    def note_names(self) -> list[str]:
+    def note_names(self) -> tuple[str, ...]:
         """Return 12 note names, rising, starting from the key principle"""
         offset = EqualTempered.find_chromatic_index(self.key_name)
         names_from_c = self.note_names_including_enharmonics()
