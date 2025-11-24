@@ -1,6 +1,5 @@
 """SpiralPlot"""
 
-import math
 import plotly.express as px
 from plotly import graph_objects
 import pandas as pd
@@ -12,8 +11,6 @@ from semitone.spiral_scale import SpiralScale
 
 class SpiralPlot:
     """The graphical depiction of one or more scales as logarithmic spirals."""
-
-    _B_ANGLE = math.log(2) / 2 / math.pi  # scale for angle calculations
 
     @staticmethod
     def draw(
@@ -93,12 +90,13 @@ class SpiralPlot:
         Returns:
             For structure of pandas.DataFrame see generate_data_for_one_scale
         """
+        overall_key = scales[0].principle
         frames = []
         for i, scale in enumerate(scales):
             extended_scale = Extender.extend(
                 scale, octaves_below, octaves_above
             )
-            spiral_scale = SpiralScale(extended_scale)
+            spiral_scale = SpiralScale(extended_scale, overall_key)
             df = spiral_scale.get_dataframe_copy()
 
             # apply slight radial offset to distinguish overlaps
