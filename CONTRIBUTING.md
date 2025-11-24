@@ -2,13 +2,15 @@
 
 **Style**: We conform to PEP-8 and where that is silent we follow the
 [Google style guide](https://google.github.io/styleguide/pyguide.html).
-We also use type hints. To automate conformance run black, pylint, and mypy.
-Pylint is configured to the google pylintrc (with a few minor adjustments).
+We also use type hints.
+
+Style's enforced with `black`, type-hinting with `mypy`, linting with `pylint`
+which is configured to the Google pylintrc (with a few minor adjustments).
+
+To check conformatnce locally, from within a poetry shell, invoke
 
 ```bash
-$ black --line-length 80 .        # format to style
-$ pylint .                        # get linting warnings
-$ mypy --ignore-missing-imports . # get type-hinting warnings
+$ ./check-style.sh
 ```
 
 **Testing**: We use the unittest framework. Tests are all feature tests,
