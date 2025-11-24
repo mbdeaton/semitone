@@ -31,7 +31,7 @@ class SpiralPlot:
         Returns:
             a plotly graph_objects.Figure
         """
-        big_df = SpiralPlot.generate_data_for_all_scales(
+        big_df = SpiralPlot._generate_data_for_all_scales(
             scales, octaves_below, octaves_above
         )
 
@@ -47,6 +47,8 @@ class SpiralPlot:
         key = scales[0].key_name
         max_rad = big_df["wavelength"].max()
         fig.update_layout(
+            width=600,
+            height=600,
             template=None,
             legend_title_text="Scale",
             polar=dict(
@@ -67,11 +69,11 @@ class SpiralPlot:
         return fig
 
     @staticmethod
-    def generate_data_for_all_scales(
+    def _generate_data_for_all_scales(
         scales: tuple[Scale, ...],
         octaves_below: int,
         octaves_above: int,
-        radial_separation: float = 1.01,
+        radial_separation: float = 1.02,
     ) -> pd.DataFrame:
         """Return a combined dataframe of polar plot data for multiple scales.
 
