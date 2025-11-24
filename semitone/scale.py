@@ -19,7 +19,7 @@ class Scale:
         self.principle: Tone = Tone(0.0)
 
     def __str__(self) -> str:
-        return " ".join([f"{tone}" for tone in self.primaries])
+        return ", ".join([f"{tone}" for tone in self.primaries])
 
     def __repr__(self) -> str:
         return str(self)
