@@ -33,10 +33,12 @@ class TestScale(unittest.TestCase):
                 self.assertEqual(s.principle, principle["principle tone"])
 
     def test_compare_primaries_of_synonymous_scales(self):
-        self.assertScalesUseSameNotes(Major("C"), Minor("A"))
-        self.assertScalesUseSameNotes(Major("C"), DiatonicMode("C", 1))
+        self.assert_scales_use_same_notes(Major("C"), Minor("A"))
+        self.assert_scales_use_same_notes(Major("C"), DiatonicMode("C", 1))
 
-    def assertScalesUseSameNotes(self, scale_1: Scale, scale_2: Scale) -> None:
+    def assert_scales_use_same_notes(
+        self, scale_1: Scale, scale_2: Scale
+    ) -> None:
         """Assert two Scales are played with the same keys on the keyboard."""
         for t1 in scale_1.primaries:
             if not any(t1.same_pitch_class(t2) for t2 in scale_2.primaries):
