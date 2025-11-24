@@ -39,9 +39,9 @@ class TestScale(unittest.TestCase):
     def assertScalesUseSameNotes(self, scale_1: Scale, scale_2: Scale) -> None:
         """Assert two Scales are played with the same keys on the keyboard."""
         for t1 in scale_1.primaries:
-            if not any(t1.octave_equivalent(t2) for t2 in scale_2.primaries):
+            if not any(t1.same_pitch_class(t2) for t2 in scale_2.primaries):
                 self.fail(f"{t1} not found in Scale {scale_2}")
 
         for t2 in scale_2.primaries:
-            if not any(t2.octave_equivalent(t1) for t1 in scale_1.primaries):
+            if not any(t2.same_pitch_class(t1) for t1 in scale_1.primaries):
                 self.fail(f"{t2} not found in Scale {scale_1}")
