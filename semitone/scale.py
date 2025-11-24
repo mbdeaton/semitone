@@ -23,3 +23,17 @@ class Scale:
 
     def __repr__(self) -> str:
         return str(self)
+
+    def __eq__(self, other: object) -> bool:
+        """True if two Scales have the same primary Tones within a tolerance.
+
+        For tolerance, see Tone.__eq__.
+        """
+        if not isinstance(other, Scale):
+            return NotImplemented
+        if len(self.primaries) != len(other.primaries):
+            return False
+        for t1, t2 in zip(self.primaries, other.primaries):
+            if not t1 == t2:
+                return False
+        return True

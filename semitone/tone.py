@@ -21,6 +21,7 @@ class Tone:
         return str(self)
 
     def __eq__(self, other: object) -> bool:
+        """True if two Tones have the same frequency within delta cents."""
         if not isinstance(other, Tone):
             return NotImplemented
         return abs(self.freq - other.freq) < self._delta
