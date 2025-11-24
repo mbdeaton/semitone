@@ -21,12 +21,13 @@ class Tone:
         return str(self)
 
     def __eq__(self, other: object) -> bool:
+        """True if two Tones have the same frequency within delta cents."""
         if not isinstance(other, Tone):
             return NotImplemented
         return abs(self.freq - other.freq) < self._delta
 
-    def octave_equivalent(self, other: object) -> bool:
-        """True if two Tones represent the same note, ignoring octaves."""
+    def same_pitch_class(self, other: object) -> bool:
+        """True if two Tones are any n octaves apart, i.e. same pitch class"""
         if not isinstance(other, Tone):
             return NotImplemented
         freq1, freq2 = self.freq, other.freq

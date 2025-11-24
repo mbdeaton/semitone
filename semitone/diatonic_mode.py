@@ -7,7 +7,7 @@ from semitone.equal_tempered import EqualTempered
 class DiatonicMode(EqualTempered):
     """The seven notes from one of the classical diatonic modes."""
 
-    _MODE_NAMES = [
+    _MODE_NAMES = (
         "ion",
         "dor",
         "phr",
@@ -15,7 +15,7 @@ class DiatonicMode(EqualTempered):
         "mix",
         "aeo",
         "loc",
-    ]
+    )
 
     def __init__(self, key_name: str, mode: int) -> None:
         """Initialize. See args for EqualTempered, plus mode below.
