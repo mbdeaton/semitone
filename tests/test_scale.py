@@ -13,32 +13,34 @@ import unittest
 class TestScale(unittest.TestCase):
     """Feature tests for the Scale class."""
 
-    def test_get_principle_and_primaries_as_floats(self):
-        scales_and_inits = [
-            (Chromatic, "C"),
-            (Major, "C"),
-        ]
-        for scale, init in scales_and_inits:
-            with self.subTest(scale=scale, initializer=init):
-                s = scale(init)
-                self.assertIsInstance(s.principle.freq, float)
-                for tone in s.primaries:
-                    self.assertIsInstance(tone.freq, float)
-
-    def test_compute_principle_of_equal_tempered_scales_as_expected(self):
+    def test_compute_principle_frequency_of_equal_tempered_scales(self):
         principle = {"name": "C", "principle tone": Tone(261.626)}
         for scale_type in (Chromatic, Major, Minor):
             with self.subTest(scale_type=scale_type):
                 s = scale_type(principle["name"])
                 self.assertEqual(s.principle, principle["principle tone"])
 
-    def test_compare_primaries_of_synonymous_scales(self):
-        self.assert_scales_use_same_notes(Major("C"), Minor("A"))
-        self.assert_scales_use_same_notes(Major("C"), DiatonicMode("C", 1))
+    def test_compute_primary_frequencies_of_equal_tempered_scales(self):
+        expected_frequencies = {
+            "C maj": (261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88),
+            "C min": (261.63, 293.66, 311.13, 349.23, 392.00, 415.30, 466.16),
+            "C dor": (261.63, 293.66, 311.13, 349.23, 392.00, 440.00, 466.16),
+        }
+        scales = (
+            ("C maj", Major("C")),
+            ("C min", Minor("C")),
+            ("C dor", DiatonicMode("C", 2)),
+        )
+        for scale_name, scale in scales:
+            with self.subTest(scale_name=scale_name):
+                frequencies = [tone.freq for tone in scale.primaries]
+                self.assertEqual(frequencies, expected_frequencies[scale_name])
 
-    def assert_scales_use_same_notes(
-        self, scale_1: Scale, scale_2: Scale
-    ) -> None:
+    def test_compare_primaries_of_synonymous_scales(self):
+        self.assertScalesUseSameNotes(Major("C"), Minor("A"))
+        self.assertScalesUseSameNotes(Major("C"), DiatonicMode("C", 1))
+
+    def assertScalesUseSameNotes(self, scale_1: Scale, scale_2: Scale) -> None:
         """Assert two Scales are played with the same keys on the keyboard."""
         for t1 in scale_1.primaries:
             if not any(t1.same_pitch_class(t2) for t2 in scale_2.primaries):
