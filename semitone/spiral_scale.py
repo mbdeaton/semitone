@@ -18,14 +18,26 @@ class SpiralScale:
         Args:
             scale (Scale): the scale to be represented as a log spiral
         """
-        self.scaling_factor = scaling_factor
-        self.principle_radius = self.radius_from_freq(
+        self._scaling_factor = scaling_factor
+        self._principle_radius = self._radius_from_freq(
             scale.principle.freq, scale.principle.freq, scaling_factor
         )
-        self.zeroth_radius = self.principle_radius
-        self.point_pairs = self.generate_radii_and_angles_from_scale(scale)
+        self._zeroth_radius = self._principle_radius
+        self._dataframe = self._generate_radii_and_angles_from_scale(scale)
 
-    def generate_radii_and_angles_from_scale(
+    def get_dataframe_copy(self) -> pd.DataFrame:
+        """Return a copy of the internal dataframe of polar plot data.
+
+        Returns:
+            pandas.DataFrame with one row per scale tone, having columns:
+
+                wavelength (float) : radial coordinate of the tone
+                angle      (float) : angular coordinate of the tone, in degrees
+                name       (str)   : the key name of the Scale
+        """
+        return self._dataframe.copy()
+
+    def _generate_radii_and_angles_from_scale(
         self,
         scale: Scale,
     ) -> pd.DataFrame:
@@ -41,12 +53,12 @@ class SpiralScale:
                 angle      (float) : angular coordinate of the tone, in degrees
                 name       (str)   : the key name of the Scale
         """
-        coords = self.polar_coords_from_freqs(scale.primaries, scale.principle)
+        coords = self._polar_coords_from_freqs(scale.primaries, scale.principle)
         df = pd.DataFrame(coords, columns=("wavelength", "angle"))
         df["name"] = scale.scale_name
         return df
 
-    def polar_coords_from_freqs(
+    def _polar_coords_from_freqs(
         self,
         tones: tuple[Tone, ...],
         principle: Tone | None = None,
@@ -75,14 +87,14 @@ class SpiralScale:
         if scaling_factor is None:
             scaling_factor = 1
         radii = [
-            self.radius_from_freq(t.freq, principle.freq, scaling_factor)
+            self._radius_from_freq(t.freq, principle.freq, scaling_factor)
             for t in tones
         ]
-        angles = [self.angle_from_freq(t.freq, principle.freq) for t in tones]
+        angles = [self._angle_from_freq(t.freq, principle.freq) for t in tones]
         return zip(radii, angles)
 
     @staticmethod
-    def radius_from_freq(
+    def _radius_from_freq(
         frequency: float, principle: float, scaling_factor: float
     ) -> float:
         """Convert a frequency to a scaled wavelength.
@@ -98,7 +110,7 @@ class SpiralScale:
         return scaling_factor * principle / frequency
 
     @staticmethod
-    def angle_from_freq(frequency: float, principle: float) -> float:
+    def _angle_from_freq(frequency: float, principle: float) -> float:
         """Convert a frequency to an angle on [0,360).
 
         Note, increasing the input frequency increases the angle in the

@@ -78,7 +78,7 @@ class SpiralPlot:
         Each input Scale is first expanded by the requested number of octaves,
         converted to polar coordinates, and then concatenated into a single
         dataframe suitable for plotting.  A small radial rescaling is applied
-        to every scale after the first so identical tones do not perfectly
+        to every scale after the first, so identical tones do not perfectly
         overlap on the plot.
 
         Args:
@@ -97,7 +97,7 @@ class SpiralPlot:
                 scale, octaves_below, octaves_above
             )
             spiral_scale = SpiralScale(extended_scale)
-            df = spiral_scale.point_pairs.copy()
+            df = spiral_scale.get_dataframe_copy()
 
             # apply slight radial offset to distinguish overlaps
             if i > 0:
