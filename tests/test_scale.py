@@ -3,6 +3,7 @@
 # TODO make it so you only import Scale
 from semitone.tone import Tone
 from semitone.scale import Scale
+from semitone.arbitrary import Arbitrary
 from semitone.chromatic import Chromatic
 from semitone.major import Major
 from semitone.minor import Minor
@@ -21,10 +22,16 @@ class TestScale(unittest.TestCase):
                 self.assertEqual(s.principle, principle["principle tone"])
 
     def test_compute_primary_frequencies_of_equal_tempered_scales(self):
-        expected_frequencies = {
-            "C maj": (261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88),
-            "C min": (261.63, 293.66, 311.13, 349.23, 392.00, 415.30, 466.16),
-            "C dor": (261.63, 293.66, 311.13, 349.23, 392.00, 440.00, 466.16),
+        expected_scales = {
+            "C maj": Arbitrary(
+                (261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88)
+            ),
+            "C min": Arbitrary(
+                (261.63, 293.66, 311.13, 349.23, 392.00, 415.30, 466.16)
+            ),
+            "C dor": Arbitrary(
+                (261.63, 293.66, 311.13, 349.23, 392.00, 440.00, 466.16)
+            ),
         }
         scales = (
             ("C maj", Major("C")),
@@ -33,8 +40,7 @@ class TestScale(unittest.TestCase):
         )
         for scale_name, scale in scales:
             with self.subTest(scale_name=scale_name):
-                frequencies = [tone.freq for tone in scale.primaries]
-                self.assertEqual(frequencies, expected_frequencies[scale_name])
+                self.assertEqual(scale, expected_scales[scale_name])
 
     def test_compare_primaries_of_synonymous_scales(self):
         self.assertScalesUseSameNotes(Major("C"), Minor("A"))
