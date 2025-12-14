@@ -10,6 +10,7 @@ class TestDraw(unittest.TestCase):
     """Feature tests for the SpiralPlot class."""
 
     def test_see_all_tones_as_points_at_expected_radial_positions(self):
+        # FUTURE: silence the figure show (opening a browser tab)
         scale = Chromatic("C")
         min_angle_deg = 30
         points_expected = zip(
