@@ -37,3 +37,20 @@ class Scale:
             if not t1 == t2:
                 return False
         return True
+
+    def extend(self, octaves_below: int, octaves_above: int) -> "Scale":
+        """Return the Scale extended to additional octaves
+
+        Args:
+            octaves_below, octaves_above (int): how many octaves to extend
+                outside the primary scale
+        """
+        tones = []
+        for octave in range(-octaves_below, octaves_above + 1):
+            multiplier = 2**octave
+            tones.extend(
+                [Tone(multiplier * tone.freq) for tone in self.primaries]
+            )
+        new_scale = self
+        new_scale.primaries = tuple(tones)
+        return new_scale

@@ -5,7 +5,6 @@ from plotly import graph_objects
 import pandas as pd
 from semitone.scale import Scale
 from semitone.equal_tempered import EqualTempered
-from semitone.extender import Extender
 from semitone.spiral_scale import SpiralScale
 
 
@@ -93,9 +92,7 @@ class SpiralPlot:
         overall_key = scales[0].principle
         frames = []
         for i, scale in enumerate(scales):
-            extended_scale = Extender.extend(
-                scale, octaves_below, octaves_above
-            )
+            extended_scale = scale.extend(octaves_below, octaves_above)
             spiral_scale = SpiralScale(extended_scale, overall_key)
             df = spiral_scale.get_dataframe_copy()
 
