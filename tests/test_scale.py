@@ -1,6 +1,5 @@
 """Feature: Generate and manipulate sequences of tones aka scales."""
 
-# FUTURE make it so you only import Scale
 from semitone.tone import Tone
 from semitone.scale import Scale
 from semitone.arbitrary import Arbitrary
