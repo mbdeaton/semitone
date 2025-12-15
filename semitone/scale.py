@@ -1,6 +1,7 @@
 """Scale: the base of the hierarchy."""
 
 from semitone.tone import Tone
+from copy import deepcopy
 
 
 class Scale:
@@ -51,6 +52,6 @@ class Scale:
             tones.extend(
                 [Tone(multiplier * tone.freq) for tone in self.primaries]
             )
-        new_scale = self
+        new_scale = deepcopy(self)
         new_scale.primaries = tuple(tones)
         return new_scale

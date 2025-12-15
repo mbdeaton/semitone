@@ -45,6 +45,34 @@ class TestScale(unittest.TestCase):
         self.assertScalesUseSameNotes(Major("C"), Minor("A"))
         self.assertScalesUseSameNotes(Major("C"), DiatonicMode("C", 1))
 
+    def test_extend_scale_by_number_of_octaves(self):
+        base_scale = Major("C")
+        extended_scale = base_scale.extend(octaves_below=1, octaves_above=1)
+        list_of_subscales = self.split_multi_octave_scale(
+            extended_scale, len(base_scale.primaries)
+        )
+        for scale in list_of_subscales:
+            self.assertScalesUseSameNotes(base_scale, scale)
+
+    def split_multi_octave_scale(
+        self, scale: Scale, num_primaries: int
+    ) -> list[Arbitrary]:
+        """Return a list of single-octave Scales from a multi-octave Scale."""
+        scales = []
+        num_tones = len(scale.primaries)
+        if num_tones % num_primaries != 0:
+            raise ValueError(
+                f"{num_tones} tones is not divisible by {num_primaries}"
+            )
+        num_octaves = num_tones // num_primaries
+        for octave in range(num_octaves):
+            start_index = octave * num_primaries
+            end_index = start_index + num_primaries
+            octave_tones = scale.primaries[start_index:end_index]
+            octave_scale = Arbitrary(tuple(tone.freq for tone in octave_tones))
+            scales.append(octave_scale)
+        return scales
+
     def assertScalesUseSameNotes(self, scale_1: Scale, scale_2: Scale) -> None:
         """Assert two Scales are played with the same keys on the keyboard."""
         for t1 in scale_1.primaries:
