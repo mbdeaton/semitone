@@ -47,10 +47,14 @@ class TestScale(unittest.TestCase):
 
     def test_extend_scale_by_number_of_octaves(self):
         base_scale = Major("C")
-        extended_scale = base_scale.extend(octaves_below=1, octaves_above=1)
+        octaves_below = 1
+        octaves_above = 1
+        extended_scale = base_scale.extend(octaves_below, octaves_above)
         list_of_subscales = self.split_multi_octave_scale(
             extended_scale, len(base_scale.primaries)
         )
+        total_octaves = octaves_below + octaves_above + 1
+        self.assertEqual(len(list_of_subscales), total_octaves)
         for scale in list_of_subscales:
             self.assertScalesUseSameNotes(base_scale, scale)
 
