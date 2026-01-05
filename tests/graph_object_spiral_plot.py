@@ -1,8 +1,6 @@
 """GraphObjectSpiralPlot for tests."""
 
-from typing import Iterable
-
-import pandas
+import pandas as pd
 import plotly.graph_objects as go
 
 
@@ -17,8 +15,8 @@ class GraphObjectSpiralPlot:
         """
         self._figure = figure
 
-    def get_polar_points(self) -> Iterable[pandas.DataFrame]:
-        """Return the polar plot points (r, theta) for each figure in the SpiralPlot.
+    def get_polar_points(self) -> tuple[pd.DataFrame]:
+        """Return the polar plot points (r, theta) for each figure in the plot.
 
         Returns:
             Iterable of pandas.DataFrames, one for each scale represented in the
@@ -31,11 +29,11 @@ class GraphObjectSpiralPlot:
         dataframes = []
         for trace in self._figure.data:
             assert isinstance(trace, go.Scatterpolar)
-            df = pandas.DataFrame(
+            df = pd.DataFrame(
                 {
                     "wavelength": trace.r,
                     "angle": trace.theta,
                 }
             )
             dataframes.append(df)
-        return dataframes
+        return tuple(dataframes)
