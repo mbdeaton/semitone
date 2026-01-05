@@ -8,7 +8,7 @@ from semitone.scale import Scale
 
 
 class SpiralScale:
-    """The geometric representation of a scale as a logarithmic spiral."""
+    """The geometric representation of a single scale as a log spiral."""
 
     _B_ANGLE = math.log(2) / 2 / math.pi  # scale for angle calculations
 

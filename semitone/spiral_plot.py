@@ -1,7 +1,7 @@
 """SpiralPlot"""
 
 import plotly.express as px
-from plotly import graph_objects
+import plotly.graph_objects as go
 import pandas as pd
 from semitone.scale import Scale
 from semitone.equal_tempered import EqualTempered
@@ -16,7 +16,7 @@ class SpiralPlot:
         scales: tuple[Scale, ...],
         octaves_below: int = 0,
         octaves_above: int = 0,
-    ) -> graph_objects.Figure:
+    ) -> go.Figure:
         """Render the spiral representation of scale(s) in a polar plot.
 
         Args:
@@ -84,10 +84,10 @@ class SpiralPlot:
             octaves_below, octaves_above (int): how many octaves to extend
                 outside each primary scale; defaults = don't extend
             radial_separation (float): multiplicative factor applied to the
-                radii of each scale after the first; default = 1.01
+                radii of each scale after the first; default = 1.02
 
         Returns:
-            For structure of pandas.DataFrame see generate_data_for_one_scale
+            pandas.DataFrame; see SpiralScale.get_dataframe_copy() for details
         """
         overall_key = scales[0].principle
         frames = []
