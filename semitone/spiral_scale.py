@@ -127,11 +127,11 @@ class SpiralScale:
         Returns:
             the computed angle in degrees (float)
         """
-        # compute in standard physics coords: radians, 0 is east, increase CCW
+        # compute in standard physics coords: rad, 0 is east, increase CCW
         angle = (
             math.log(zeroth / frequency) / SpiralScale._B_ANGLE + math.pi / 2
         )
-        # transform to plotly polar plot coords: degrees, 0 is north, increase CW
+        # transform to plotly polar plot coords: deg, 0 is north, increase CW
         angle = (math.pi / 2 - angle) * 180 / math.pi
         # constrain to [0,360)
         angle = angle % 360
