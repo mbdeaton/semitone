@@ -12,8 +12,6 @@ class TestTone(unittest.TestCase):
     BASE_FREQ = 440.0
 
     def test_compare_slightly_different_tones_expect_equal(self):
-        """Tones differing less than accepted delta should compare equal."""
-
         delta = self.BASE_FREQ * (self.DELTA_CENTS - self.JITTER_CENTS) / 1200
 
         base_tone = Tone(self.BASE_FREQ)
@@ -29,8 +27,6 @@ class TestTone(unittest.TestCase):
                 self.assertEqual(base_tone, tone)
 
     def test_compare_slightly_different_tones_expect_unequal(self):
-        """Tones differing more than accepted delta should compare unequal."""
-
         delta = self.BASE_FREQ * (self.DELTA_CENTS + self.JITTER_CENTS) / 1200
 
         base_tone = Tone(self.BASE_FREQ)

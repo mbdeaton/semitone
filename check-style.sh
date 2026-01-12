@@ -14,7 +14,7 @@ black --line-length 80 $CHECK_DIRS
 
 echo ""
 echo "Running Pylint..."
-pylint $CHECK_DIRS
+pylint -v $CHECK_DIRS
 
 echo ""
 echo "Running Mypy..."

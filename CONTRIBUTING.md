@@ -7,7 +7,7 @@ We also use type hints.
 Style's enforced with `black`, type-hinting with `mypy`, linting with `pylint`
 which is configured to the Google pylintrc (with a few minor adjustments).
 
-To check conformatnce locally, from within a poetry shell, invoke
+To check conformance locally, from within a poetry shell, invoke
 
 ```bash
 $ ./check-style.sh
