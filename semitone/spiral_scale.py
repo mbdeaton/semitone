@@ -131,7 +131,8 @@ class SpiralScale:
         angle = (
             math.log(zeroth / frequency) / SpiralScale._B_ANGLE + math.pi / 2
         )
-        if angle < 0 or angle >= 2 * math.pi:
-            angle = angle % (2 * math.pi)
-        # convert to plotly polar plot coords: degrees, 0 is north, increase CW
-        return (math.pi / 2 - angle) * 180 / math.pi
+        # transform to plotly polar plot coords: degrees, 0 is north, increase CW
+        angle = (math.pi / 2 - angle) * 180 / math.pi
+        # constrain to [0,360)
+        angle = angle % 360
+        return angle
