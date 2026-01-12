@@ -15,7 +15,7 @@ class GraphObjectSpiralPlot:
         """
         self._figure = figure
 
-    def get_polar_points(self) -> tuple[pd.DataFrame]:
+    def get_polar_points(self) -> tuple[pd.DataFrame, ...]:
         """Return the polar plot points (r, theta) for each figure in the plot.
 
         Returns:
