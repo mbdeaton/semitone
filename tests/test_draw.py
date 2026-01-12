@@ -36,6 +36,59 @@ class TestDraw(unittest.TestCase):
             rtol=0,
         )
 
+    def test_see_multiple_scales_with_different_principles(self):
+        scale1 = Chromatic("C")
+        scale2 = Chromatic("E")
+        fig = SpiralPlot.draw((scale1, scale2))
+        graph_object = GraphObjectSpiralPlot(fig)
+        dfs_actual = graph_object.get_polar_points()
+        df_expected_scale1 = self.generate_points_expected_chromatic(
+            principle_angle_deg=0.0,
+            principle_radius=self.DEFAULT_PRINCIPLE_RADIUS,
+            num_tones=12,
+            radial_rescaling=1.0,
+        )
+        df_expected_scale2 = self.generate_points_expected_chromatic(
+            principle_angle_deg=120.0,
+            principle_radius=(
+                self.DEFAULT_PRINCIPLE_RADIUS
+                / self.radial_rescale_factor(num_semitones=4)
+            ),
+            num_tones=12,
+            radial_rescaling=self.DEFAULT_BASE_RESCALING_FACTOR,
+        )
+        self.assertEqual(len(dfs_actual), 2)
+        assert_frame_equal(
+            dfs_actual[0],
+            df_expected_scale1,
+            check_exact=False,
+            atol=self.TEST_TOL,
+            rtol=0,
+        )
+        assert_frame_equal(
+            dfs_actual[1],
+            df_expected_scale2,
+            check_exact=False,
+            atol=self.TEST_TOL,
+            rtol=0,
+        )
+
+    def radial_rescale_factor(
+        self,
+        num_semitones: int,
+    ) -> float:
+        """Return the radial rescaling factor for a given number of semitones.
+
+        Args:
+            num_semitones (int): the number of semitones between two tones;
+                positive means new tone is higher than old, and therefore
+                has a shorter wavelength and smaller radius on the plot
+
+        Returns:
+            float: the radial rescaling factor to get new tone from old tone
+        """
+        return pow(2, num_semitones / 12)
+
     def generate_points_expected_chromatic(
         self,
         principle_angle_deg: float,
