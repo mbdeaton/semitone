@@ -3,10 +3,8 @@
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
-
-from semitone.scales.equal_tempered import EqualTempered
-from semitone.scales.scale import Scale
-from semitone.visuals.spiral_scale import SpiralScale
+from .. import Scale, EqualTempered
+from . import SpiralScale
 
 
 class SpiralPlot:

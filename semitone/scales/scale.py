@@ -1,8 +1,7 @@
 """Scale: the base of the hierarchy."""
 
 from copy import deepcopy
-
-from semitone.scales.tone import Tone
+from . import Tone
 
 
 class Scale:

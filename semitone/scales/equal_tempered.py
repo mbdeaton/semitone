@@ -1,7 +1,6 @@
 """EqualTempered: a scale on a grid."""
 
-from semitone.scales.scale import Scale
-from semitone.scales.tone import Tone
+from . import Tone, Scale
 
 
 class EqualTempered(Scale):

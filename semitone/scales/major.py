@@ -1,7 +1,6 @@
 """Major: an equal-tempered scale."""
 
-from semitone.scales.equal_tempered import EqualTempered
-from semitone.scales.tone import Tone
+from . import Tone, EqualTempered
 
 
 class Major(EqualTempered):
