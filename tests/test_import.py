@@ -11,18 +11,19 @@ class TestImport(unittest.TestCase):
         "semitone",
         "semitone.scales",
         "semitone.visuals",
+        "semitone.scales.tone",
+        "semitone.scales.scale",
         "semitone.scales.arbitrary",
+        "semitone.scales.equal_tempered",
         "semitone.scales.chromatic",
         "semitone.scales.diatonic_mode",
-        "semitone.scales.equal_tempered",
         "semitone.scales.major",
         "semitone.scales.minor",
-        "semitone.scales.scale",
-        "semitone.scales.tone",
-        "semitone.visuals.spiral_plot",
         "semitone.visuals.spiral_scale",
+        "semitone.visuals.spiral_plot",
     ]
 
+    # Top-level API
     PACKAGE_EXPORTS = [
         "Tone",
         "Scale",
@@ -32,7 +33,6 @@ class TestImport(unittest.TestCase):
         "DiatonicMode",
         "Major",
         "Minor",
-        "SpiralScale",
         "SpiralPlot",
     ]
 
