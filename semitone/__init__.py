@@ -17,15 +17,15 @@ Main classes:
     SpiralPlot: Graphical representation of scales as spiral plots
 """
 
-from semitone.scales.tone import Tone
-from semitone.scales.scale import Scale
-from semitone.scales.arbitrary import Arbitrary
-from semitone.scales.equal_tempered import EqualTempered
-from semitone.scales.chromatic import Chromatic
-from semitone.scales.diatonic_mode import DiatonicMode
-from semitone.scales.major import Major
-from semitone.scales.minor import Minor
-from semitone.visuals.spiral_plot import SpiralPlot
+from .scales.tone import Tone
+from .scales.scale import Scale
+from .scales.arbitrary import Arbitrary
+from .scales.equal_tempered import EqualTempered
+from .scales.chromatic import Chromatic
+from .scales.diatonic_mode import DiatonicMode
+from .scales.major import Major
+from .scales.minor import Minor
+from .visuals.spiral_plot import SpiralPlot
 
 __all__ = [
     "Tone",

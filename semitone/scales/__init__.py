@@ -5,14 +5,14 @@ Users can import directly from this module:
     from semitone.scales import Major, Minor, Tone
 """
 
-from semitone.scales.tone import Tone
-from semitone.scales.scale import Scale
-from semitone.scales.arbitrary import Arbitrary
-from semitone.scales.equal_tempered import EqualTempered
-from semitone.scales.chromatic import Chromatic
-from semitone.scales.diatonic_mode import DiatonicMode
-from semitone.scales.major import Major
-from semitone.scales.minor import Minor
+from .tone import Tone
+from .scale import Scale
+from .arbitrary import Arbitrary
+from .equal_tempered import EqualTempered
+from .chromatic import Chromatic
+from .diatonic_mode import DiatonicMode
+from .major import Major
+from .minor import Minor
 
 __all__ = [
     "Tone",
