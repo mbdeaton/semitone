@@ -1,52 +1,46 @@
 """Feature: Generate and manipulate sequences of tones aka scales."""
 
 import unittest
-from semitone import Tone
-from semitone import Scale
-from semitone import Arbitrary
-from semitone import Chromatic
-from semitone import Major
-from semitone import Minor
-from semitone import DiatonicMode
+import semitone as st
 
 
 class TestScale(unittest.TestCase):
     """Feature tests for the Scale class."""
 
     def test_compute_principle_frequency_of_equal_tempered_scales(self):
-        principle = {"name": "C", "principle tone": Tone(261.626)}
-        for scale_type in (Chromatic, Major, Minor):
+        principle = {"name": "C", "principle tone": st.Tone(261.626)}
+        for scale_type in (st.Chromatic, st.Major, st.Minor):
             with self.subTest(scale_type=scale_type):
                 s = scale_type(principle["name"])
                 self.assertEqual(s.principle, principle["principle tone"])
 
     def test_compute_primary_frequencies_of_equal_tempered_scales(self):
         expected_scales = {
-            "C maj": Arbitrary(
+            "C maj": st.Arbitrary(
                 (261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88)
             ),
-            "C min": Arbitrary(
+            "C min": st.Arbitrary(
                 (261.63, 293.66, 311.13, 349.23, 392.00, 415.30, 466.16)
             ),
-            "C dor": Arbitrary(
+            "C dor": st.Arbitrary(
                 (261.63, 293.66, 311.13, 349.23, 392.00, 440.00, 466.16)
             ),
         }
         scales = (
-            ("C maj", Major("C")),
-            ("C min", Minor("C")),
-            ("C dor", DiatonicMode("C", 2)),
+            ("C maj", st.Major("C")),
+            ("C min", st.Minor("C")),
+            ("C dor", st.DiatonicMode("C", 2)),
         )
         for scale_name, scale in scales:
             with self.subTest(scale_name=scale_name):
                 self.assertEqual(scale, expected_scales[scale_name])
 
     def test_compare_primaries_of_synonymous_scales(self):
-        self.assertScalesUseSameNotes(Major("C"), Minor("A"))
-        self.assertScalesUseSameNotes(Major("C"), DiatonicMode("C", 1))
+        self.assertScalesUseSameNotes(st.Major("C"), st.Minor("A"))
+        self.assertScalesUseSameNotes(st.Major("C"), st.DiatonicMode("C", 1))
 
     def test_extend_scale_by_number_of_octaves(self):
-        base_scale = Major("C")
+        base_scale = st.Major("C")
         octaves_below = 1
         octaves_above = 1
         extended_scale = base_scale.extend(octaves_below, octaves_above)
@@ -59,8 +53,8 @@ class TestScale(unittest.TestCase):
             self.assertScalesUseSameNotes(base_scale, scale)
 
     def split_multi_octave_scale(
-        self, scale: Scale, num_primaries: int
-    ) -> list[Arbitrary]:
+        self, scale: st.Scale, num_primaries: int
+    ) -> list[st.Arbitrary]:
         """Return a list of single-octave Scales from a multi-octave Scale."""
         scales = []
         num_tones = len(scale.primaries)
@@ -73,11 +67,15 @@ class TestScale(unittest.TestCase):
             start_index = octave * num_primaries
             end_index = start_index + num_primaries
             octave_tones = scale.primaries[start_index:end_index]
-            octave_scale = Arbitrary(tuple(tone.freq for tone in octave_tones))
+            octave_scale = st.Arbitrary(
+                tuple(tone.freq for tone in octave_tones)
+            )
             scales.append(octave_scale)
         return scales
 
-    def assertScalesUseSameNotes(self, scale_1: Scale, scale_2: Scale) -> None:
+    def assertScalesUseSameNotes(
+        self, scale_1: st.Scale, scale_2: st.Scale
+    ) -> None:
         """Assert two Scales are played with the same keys on the keyboard."""
         for t1 in scale_1.primaries:
             if not any(t1.same_pitch_class(t2) for t2 in scale_2.primaries):

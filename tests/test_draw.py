@@ -3,8 +3,7 @@
 import unittest
 import pandas as pd
 from pandas.testing import assert_frame_equal
-from semitone import Chromatic
-from semitone import SpiralPlot
+import semitone as st
 from tests.graph_object_spiral_plot import GraphObjectSpiralPlot
 
 
@@ -18,8 +17,8 @@ class TestDraw(unittest.TestCase):
     def test_see_all_tones_as_points_at_polar_positions(
         self,
     ):
-        scale = Chromatic("C")
-        fig = SpiralPlot.draw((scale,))
+        scale = st.Chromatic("C")
+        fig = st.SpiralPlot.draw((scale,))
         graph_object = GraphObjectSpiralPlot(fig)
         dfs_actual = graph_object.get_polar_points()
         df_expected = self.generate_points_expected_chromatic(
@@ -37,9 +36,9 @@ class TestDraw(unittest.TestCase):
         )
 
     def test_see_multiple_scales_with_different_principles(self):
-        scale1 = Chromatic("C")
-        scale2 = Chromatic("E")
-        fig = SpiralPlot.draw((scale1, scale2))
+        scale1 = st.Chromatic("C")
+        scale2 = st.Chromatic("E")
+        fig = st.SpiralPlot.draw((scale1, scale2))
         graph_object = GraphObjectSpiralPlot(fig)
         dfs_actual = graph_object.get_polar_points()
         df_expected_scale1 = self.generate_points_expected_chromatic(
