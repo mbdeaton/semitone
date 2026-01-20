@@ -1,7 +1,6 @@
 """Arbitrary: a scale of any tones."""
 
-from semitone.tone import Tone
-from semitone.scale import Scale
+from . import Tone, Scale
 
 
 class Arbitrary(Scale):
