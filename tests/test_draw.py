@@ -1,11 +1,11 @@
 """Feature: Draw tones on a logarithmic spiral."""
 
-import pandas as pd
-from semitone.chromatic import Chromatic
-from semitone.spiral_plot import SpiralPlot
 import unittest
-from tests.graph_object_spiral_plot import GraphObjectSpiralPlot
+import pandas as pd
 from pandas.testing import assert_frame_equal
+from semitone import Chromatic
+from semitone import SpiralPlot
+from tests.graph_object_spiral_plot import GraphObjectSpiralPlot
 
 
 class TestDraw(unittest.TestCase):

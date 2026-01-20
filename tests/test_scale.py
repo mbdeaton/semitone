@@ -1,13 +1,13 @@
 """Feature: Generate and manipulate sequences of tones aka scales."""
 
-from semitone.tone import Tone
-from semitone.scale import Scale
-from semitone.arbitrary import Arbitrary
-from semitone.chromatic import Chromatic
-from semitone.major import Major
-from semitone.minor import Minor
-from semitone.diatonic_mode import DiatonicMode
 import unittest
+from semitone import Tone
+from semitone import Scale
+from semitone import Arbitrary
+from semitone import Chromatic
+from semitone import Major
+from semitone import Minor
+from semitone import DiatonicMode
 
 
 class TestScale(unittest.TestCase):

@@ -1,7 +1,7 @@
 """Feature: Compare tones robustly against small floating point variation."""
 
 import unittest
-from semitone.tone import Tone
+from semitone import Tone
 
 
 class TestTone(unittest.TestCase):
