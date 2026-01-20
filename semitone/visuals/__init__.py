@@ -5,10 +5,10 @@ geometric plots. Users can import directly from this module:
     from semitone.visuals import SpiralPlot, SpiralScale
 """
 
-from semitone.visuals.spiral_plot import SpiralPlot
 from semitone.visuals.spiral_scale import SpiralScale
+from semitone.visuals.spiral_plot import SpiralPlot
 
 __all__ = [
-    "SpiralPlot",
     "SpiralScale",
+    "SpiralPlot",
 ]
