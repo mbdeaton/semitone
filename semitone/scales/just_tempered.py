@@ -1,8 +1,6 @@
 """JustTempered: a scale of perfect ratios."""
 
-from semitone.equal_tempered import EqualTempered
-from semitone.tone import Tone
-from semitone.scale import Scale
+from . import Tone, Scale, EqualTempered
 
 
 class JustTempered(Scale):

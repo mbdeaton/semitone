@@ -21,6 +21,7 @@ from .scales.tone import Tone
 from .scales.scale import Scale
 from .scales.arbitrary import Arbitrary
 from .scales.equal_tempered import EqualTempered
+from .scales.just_tempered import JustTempered
 from .scales.chromatic import Chromatic
 from .scales.diatonic_mode import DiatonicMode
 from .scales.major import Major
@@ -32,6 +33,7 @@ __all__ = [
     "Scale",
     "Arbitrary",
     "EqualTempered",
+    "JustTempered",
     "Chromatic",
     "DiatonicMode",
     "Major",

@@ -9,6 +9,7 @@ from .tone import Tone
 from .scale import Scale
 from .arbitrary import Arbitrary
 from .equal_tempered import EqualTempered
+from .just_tempered import JustTempered
 from .chromatic import Chromatic
 from .diatonic_mode import DiatonicMode
 from .major import Major
@@ -19,6 +20,7 @@ __all__ = [
     "Scale",
     "Arbitrary",
     "EqualTempered",
+    "JustTempered",
     "Chromatic",
     "DiatonicMode",
     "Major",
