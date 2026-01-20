@@ -1,8 +1,6 @@
 # Backlog for semitone
 Somewhat in order of operation, first at top, delete as they're completed.
 
-- Make it so users only have to import semitone to get all the relevant
-  classes. Need to flesh out `__init__.py` files.
 - Remove the need for arbitrary radial separation for the SpiralPlot, to
   distinguish overlapping tones. For example, introduce differently shaped
   or transparent symbols.
