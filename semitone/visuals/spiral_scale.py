@@ -3,8 +3,7 @@
 import math
 from typing import Iterable
 import pandas as pd
-from semitone.tone import Tone
-from semitone.scale import Scale
+from .. import Tone, Scale
 
 
 class SpiralScale:
