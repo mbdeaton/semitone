@@ -21,22 +21,24 @@ from .scales.tone import Tone
 from .scales.scale import Scale
 from .scales.arbitrary import Arbitrary
 from .scales.equal_tempered import EqualTempered
-from .scales.just_tempered import JustTempered
 from .scales.chromatic import Chromatic
 from .scales.diatonic_mode import DiatonicMode
 from .scales.major import Major
 from .scales.minor import Minor
 from .visuals.spiral_plot import SpiralPlot
+from .scales.just_tempered import JustTempered
+from .scales.harmonic_series import HarmonicSeries
 
 __all__ = [
     "Tone",
     "Scale",
     "Arbitrary",
     "EqualTempered",
-    "JustTempered",
     "Chromatic",
     "DiatonicMode",
     "Major",
     "Minor",
     "SpiralPlot",
+    "JustTempered",
+    "HarmonicSeries",
 ]

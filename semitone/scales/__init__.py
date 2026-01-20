@@ -9,20 +9,22 @@ from .tone import Tone
 from .scale import Scale
 from .arbitrary import Arbitrary
 from .equal_tempered import EqualTempered
-from .just_tempered import JustTempered
 from .chromatic import Chromatic
 from .diatonic_mode import DiatonicMode
 from .major import Major
 from .minor import Minor
+from .just_tempered import JustTempered
+from .harmonic_series import HarmonicSeries
 
 __all__ = [
     "Tone",
     "Scale",
     "Arbitrary",
     "EqualTempered",
-    "JustTempered",
     "Chromatic",
     "DiatonicMode",
     "Major",
     "Minor",
+    "JustTempered",
+    "HarmonicSeries",
 ]
