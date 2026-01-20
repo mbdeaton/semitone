@@ -1,7 +1,7 @@
 """DiatonicMode: an equal-tempered scale."""
 
-from semitone.tone import Tone
-from semitone.equal_tempered import EqualTempered
+from semitone.scales.equal_tempered import EqualTempered
+from semitone.scales.tone import Tone
 
 
 class DiatonicMode(EqualTempered):
