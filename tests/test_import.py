@@ -30,11 +30,12 @@ class TestImport(unittest.TestCase):
         "Scale",
         "Arbitrary",
         "EqualTempered",
-        "JustTempered",
         "Chromatic",
         "DiatonicMode",
         "Major",
         "Minor",
+        "JustTempered",
+        "HarmonicSeries",
         "SpiralPlot",
     ]
 
