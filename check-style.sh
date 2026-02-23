@@ -14,7 +14,8 @@ black --line-length 80 $CHECK_DIRS
 
 echo ""
 echo "Running Pylint..."
-pylint -v $CHECK_DIRS
+# Use a single worker to avoid high CPU/memory usage when run from the script
+pylint --jobs=1 -v $CHECK_DIRS
 
 echo ""
 echo "Running Mypy..."
