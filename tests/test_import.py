@@ -15,11 +15,13 @@ class TestImport(unittest.TestCase):
         "semitone.scales.scale",
         "semitone.scales.arbitrary",
         "semitone.scales.equal_tempered",
-        "semitone.scales.just_tempered",
         "semitone.scales.chromatic",
         "semitone.scales.diatonic_mode",
         "semitone.scales.major",
         "semitone.scales.minor",
+        "semitone.scales.just_tempered",
+        "semitone.scales.harmonic_series",
+        "semitone.scales.harmonic_octave",
         "semitone.visuals.spiral_scale",
         "semitone.visuals.spiral_plot",
     ]
@@ -36,6 +38,7 @@ class TestImport(unittest.TestCase):
         "Minor",
         "JustTempered",
         "HarmonicSeries",
+        "HarmonicOctave",
         "SpiralPlot",
     ]
 
