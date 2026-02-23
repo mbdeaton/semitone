@@ -18,7 +18,7 @@ class HarmonicSeries(JustTempered):
                 1 to 12
         """
         super().__init__(key_name)
-        self.scale_name = f"{key_name} harm_ser"
+        self.scale_name = f"{key_name} harm ser"
         self.primaries = tuple(
             Tone(
                 self.freq_from_fraction_of_primary(
