@@ -20,7 +20,7 @@ class TestFreqs(unittest.TestCase):
         )
         for scale_type, args in scale_inits:
             with self.subTest(scale_type=scale_type):
-                s = scale_type(*args)
+                s = scale_type(*args)  # type: ignore
                 self.assertEqual(s.principle, st.Tone(expected_freq))
 
     def test_compute_primary_frequencies_of_equal_tempered_scales(self):
