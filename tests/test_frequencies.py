@@ -2,7 +2,6 @@
 
 import unittest
 import semitone as st
-from typing import Any, Callable, Tuple
 
 
 class TestFreqs(unittest.TestCase):
@@ -26,6 +25,10 @@ class TestFreqs(unittest.TestCase):
 
     def test_compute_primary_frequencies_of_equal_tempered_scales(self):
         expected_scales = {
+            "C chrom": st.Arbitrary(
+                (261.63, 277.18, 293.66, 311.13, 329.63, 349.23)
+                + (369.99, 392.00, 415.30, 440.00, 466.16, 493.88)
+            ),
             "C maj": st.Arbitrary(
                 (261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88)
             ),
@@ -35,11 +38,20 @@ class TestFreqs(unittest.TestCase):
             "C dor": st.Arbitrary(
                 (261.63, 293.66, 311.13, 349.23, 392.00, 440.00, 466.16)
             ),
+            "C harm ser": st.Arbitrary(
+                (261.63, 523.25, 784.88, 1046.50, 1308.13, 1569.75, 1831.38)
+            ),
+            "C harm": st.Arbitrary(
+                (261.63, 294.33, 327.03, 359.74, 392.44, 425.14, 457.84)
+            ),
         }
         scales = (
+            ("C chrom", st.Chromatic("C")),
             ("C maj", st.Major("C")),
             ("C min", st.Minor("C")),
             ("C dor", st.DiatonicMode("C", 2)),
+            ("C harm ser", st.HarmonicSeries("C", 7)),
+            ("C harm", st.HarmonicOctave("C", 13)),
         )
         for scale_name, scale in scales:
             with self.subTest(scale_name=scale_name):
