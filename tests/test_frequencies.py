@@ -7,12 +7,20 @@ import semitone as st
 class TestFreqs(unittest.TestCase):
     """Feature tests for specific frequencies present in a Scale."""
 
-    def test_compute_principle_frequency_of_equal_tempered_scales(self):
-        principle = {"name": "C", "principle tone": st.Tone(261.626)}
-        for scale_type in (st.Chromatic, st.Major, st.Minor):
+    def test_compute_principle_frequency_of_scale(self):
+        expected_freq = 261.626
+        scale_inits = (
+            (st.Arbitrary, (expected_freq,)),
+            (st.Chromatic, ("C",)),
+            (st.Major, ("C",)),
+            (st.Minor, ("C",)),
+            (st.DiatonicMode, ("C", 2)),
+            (st.HarmonicOctave, ("C", 10)),
+        )
+        for scale_type, args in scale_inits:
             with self.subTest(scale_type=scale_type):
-                s = scale_type(principle["name"])
-                self.assertEqual(s.principle, principle["principle tone"])
+                s = scale_type(*args)
+                self.assertEqual(s.principle, expected_freq)
 
     def test_compute_primary_frequencies_of_equal_tempered_scales(self):
         expected_scales = {
