@@ -1,7 +1,7 @@
 """HarmonicOctave: a just-tempered scale"""
 
 from fractions import Fraction
-from . import Tone, JustTempered
+from . import JustTempered
 
 
 class HarmonicOctave(JustTempered):
@@ -14,11 +14,17 @@ class HarmonicOctave(JustTempered):
     """
 
     def __init__(self, key_name: str, max_multiplier: int) -> None:
+        """Initialize. See args for JustTempered, plus max below.
+
+        Args:
+            max_multiplier (int): the maximum multiplier of the harmonic series
+                to include in the scale; e.g. 12 includes all unique harmonics
+                from 1 to 12
+        """
         super().__init__(key_name)
         self.scale_name = f"{key_name} harm"
-
         ratios = self._unique_reduced_ratios(max_multiplier)
-        self.primaries = tuple(self._ratio_to_tone(r) for r in ratios)
+        self.primaries = tuple(self._tone_from_freq_ratio(r) for r in ratios)
 
     def _reduced_ratio(self, n: int) -> Fraction:
         """Reduce integer n into the interval [1, 2) by dividing by 2."""
@@ -35,8 +41,3 @@ class HarmonicOctave(JustTempered):
         """
         ratios = {self._reduced_ratio(n) for n in range(1, max_multiplier + 1)}
         return sorted(ratios)
-
-    def _ratio_to_tone(self, ratio: Fraction) -> Tone:
-        """Convert a fractional ratio to a `Tone` relative to the principle."""
-        freq = self.freq_from_fraction_of_primary(self.principle.freq, ratio)
-        return Tone(freq)

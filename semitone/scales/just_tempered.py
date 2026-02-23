@@ -22,19 +22,15 @@ class JustTempered(Scale):
         self.key_name = key_name
         self.principle = Tone(EqualTempered.freq_from_name(self.key_name))
 
-    @staticmethod
-    def freq_from_fraction_of_primary(
-        key_center: float, fraction: Fraction
-    ) -> float:
-        """Compute the frequency given a perfect ratio of the key center.
+    def _tone_from_freq_ratio(self, ratio: Fraction) -> Tone:
+        """Compute the Tone given a perfect ratio of the key center's freq.
 
         Args:
-            key_center (float): the frequency of the home tone in Hz
-            fraction (Fraction): the perfect ratio of the key center to compute
+            ratio (Fraction): the perfect ratio of the key center to compute
                 the frequency of, e.g. Fraction(3, 2) for a perfect fifth;
                 a fraction less than 1 means lower tone than the key center
 
         Returns:
-            the computed frequency (float)
+            the Tone with the computed frequency
         """
-        return key_center * float(fraction)
+        return Tone(self.principle.freq * float(ratio))
