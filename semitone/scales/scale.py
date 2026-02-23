@@ -42,9 +42,14 @@ class Scale:
     def extend(self, octaves_below: int, octaves_above: int) -> "Scale":
         """Return the Scale extended to additional octaves
 
+        Extends each primary tone independently into the given octave above
+        and/or below that tone. Thus for scales with primaries spanning
+        multiple octaves, this method intermixes new tones into the original
+        range of primaries, and may add duplicate tones.
+
         Args:
             octaves_below, octaves_above (int): how many octaves to extend
-                outside the primary scale
+                each primary tone
         """
         tones = []
         for octave in range(-octaves_below, octaves_above + 1):

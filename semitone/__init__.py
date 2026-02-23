@@ -26,6 +26,9 @@ from .scales.diatonic_mode import DiatonicMode
 from .scales.major import Major
 from .scales.minor import Minor
 from .visuals.spiral_plot import SpiralPlot
+from .scales.just_tempered import JustTempered
+from .scales.harmonic_series import HarmonicSeries
+from .scales.harmonic_octave import HarmonicOctave
 
 __all__ = [
     "Tone",
@@ -37,4 +40,7 @@ __all__ = [
     "Major",
     "Minor",
     "SpiralPlot",
+    "JustTempered",
+    "HarmonicSeries",
+    "HarmonicOctave",
 ]
