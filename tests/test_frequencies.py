@@ -2,6 +2,7 @@
 
 import unittest
 import semitone as st
+from typing import Any, Callable, Tuple
 
 
 class TestFreqs(unittest.TestCase):
@@ -10,17 +11,18 @@ class TestFreqs(unittest.TestCase):
     def test_compute_principle_frequency_of_scale(self):
         expected_freq = 261.626
         scale_inits = (
-            (st.Arbitrary, (expected_freq,)),
+            (st.Arbitrary, ((expected_freq,),)),
             (st.Chromatic, ("C",)),
             (st.Major, ("C",)),
             (st.Minor, ("C",)),
             (st.DiatonicMode, ("C", 2)),
-            (st.HarmonicOctave, ("C", 10)),
+            (st.HarmonicOctave, ("C", 5)),
+            (st.HarmonicSeries, ("C", 5)),
         )
         for scale_type, args in scale_inits:
             with self.subTest(scale_type=scale_type):
                 s = scale_type(*args)
-                self.assertEqual(s.principle, expected_freq)
+                self.assertEqual(s.principle, st.Tone(expected_freq))
 
     def test_compute_primary_frequencies_of_equal_tempered_scales(self):
         expected_scales = {
