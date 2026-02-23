@@ -5,7 +5,10 @@ from . import Tone, JustTempered
 
 
 class HarmonicSeries(JustTempered):
-    """The harmonic scale built by multiplying a frequency by 2, 3, 4, ..."""
+    """The harmonic scale built by multiplying a frequency by 2, 3, 4, ...
+
+    Note, this scale spans multiple octaves.
+    """
 
     def __init__(self, key_name: str, max_multiplier: int) -> None:
         """Initialize. See args for JustTempered, plus max below.
@@ -15,7 +18,7 @@ class HarmonicSeries(JustTempered):
                 1 to 12
         """
         super().__init__(key_name)
-        self.scale_name = f"{key_name} harm"
+        self.scale_name = f"{key_name} harm_ser"
         self.primaries = tuple(
             Tone(
                 self.freq_from_fraction_of_primary(

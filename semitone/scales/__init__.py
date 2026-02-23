@@ -15,6 +15,7 @@ from .major import Major
 from .minor import Minor
 from .just_tempered import JustTempered
 from .harmonic_series import HarmonicSeries
+from .harmonic_octave import HarmonicOctave
 
 __all__ = [
     "Tone",
@@ -27,4 +28,5 @@ __all__ = [
     "Minor",
     "JustTempered",
     "HarmonicSeries",
+    "HarmonicOctave",
 ]
