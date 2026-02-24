@@ -23,7 +23,7 @@ class TestFreqs(unittest.TestCase):
                 s = scale_type(*args)  # type: ignore
                 self.assertEqual(s.principle, st.Tone(expected_freq))
 
-    def test_compute_primary_frequencies_of_equal_tempered_scales(self):
+    def test_compute_primary_frequencies_of_scale(self):
         expected_scales = {
             "C chrom": st.Arbitrary(
                 (261.63, 277.18, 293.66, 311.13, 329.63, 349.23)
