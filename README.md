@@ -11,9 +11,7 @@ scaling with its progress around the full octave (semitone raises in pitch are
 30 deg clockwise rotations).
 
 For example, three octaves of the chromatic scale in C:
-<p>
-  <img src="img/chrom_c.png" alt="log spiral for chromatic C scale" width="300" />
-</p>
+![](https://raw.githubusercontent.com/mbdeaton/semitone/refs/heads/main/img/chrom_c.png)
 
 
 ### Quick Start
