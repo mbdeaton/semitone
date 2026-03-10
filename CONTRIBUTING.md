@@ -30,8 +30,7 @@ and style checks/linting on every push and pull request to the `main` branch.
 **Publishing**: A GitHub Action publishes to PyPI whenever we push a new
 version tag. If that fails, however, we can publish manually via
 `poetry build; poetry publish`. Manual publication requires the dev to
-have configured poetry with a PyPI
-API token.
+have configured poetry with a PyPI API token.
 
 **Dependency Management**: We use poetry. Some common gestures:
 
