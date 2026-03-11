@@ -27,6 +27,11 @@ $ python -m unittest -v testname # play one test
 **Continuous Integration**: We use GitHub Actions to automatically run tests
 and style checks/linting on every push and pull request to the `main` branch.
 
+**Publishing**: A GitHub Action publishes to PyPI whenever we push a new
+version tag to main. If that fails, however, we can publish manually via
+`poetry build; poetry publish`. Manual publication requires the dev to
+have configured poetry with a PyPI API token.
+
 **Dependency Management**: We use poetry. Some common gestures:
 
 ```bash

@@ -13,10 +13,10 @@ pip install semitone
 ```
 
 Analyze scales:
-```py
+```python
 import semitone as st
 
-scale = st.Major("A")
+scale = st.Major("C")
 
 # Compute frequencies
 print(scale)
@@ -27,20 +27,24 @@ fig = st.SpiralPlot.draw((scale,))
 fig.show()
 
 # Visualize equal- vs just-tempered scales together
-scale_harm = st.HarmonicSeries("A", max_multiplier=13)
+scale_harm = st.HarmonicOctave("C", max_multiplier=19)
 fig = st.SpiralPlot.draw((scale, scale_harm))
 fig.show()
 ```
 
 
-### Music and Geometry?
+### Music and Geometry
 Each tone is represented as a point on a logarithmic spiral, with its radius
 scaling with wavelength (higher tones closer to the center), and its angle
 scaling with its progress around the full octave (semitone raises in pitch are
 30 deg clockwise rotations).
 
-For example, three octaves of the chromatic scale in C:
-![](https://raw.githubusercontent.com/mbdeaton/semitone/refs/heads/main/img/chrom_c.png)
+For example, three octaves of the equal-tempered chromatic scale in C:
+![Log spiral Cchromatic C](https://raw.githubusercontent.com/mbdeaton/semitone/refs/heads/main/img/chrom_c.png)
+
+And a just-tempered scale using the first 19 harmonics compressed to a single
+octave in C (redundant tones of the same pitch class are eliminated):
+![Log spiral harmonic-19 C](https://raw.githubusercontent.com/mbdeaton/semitone/refs/heads/main/img/harm_c.png)
 
 
 ### Contributing
