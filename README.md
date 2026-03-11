@@ -13,7 +13,7 @@ pip install semitone
 ```
 
 Analyze scales:
-```py
+```python
 import semitone as st
 
 scale = st.Major("A")
@@ -33,7 +33,7 @@ fig.show()
 ```
 
 
-### Music and Geometry?
+### Music and Geometry
 Each tone is represented as a point on a logarithmic spiral, with its radius
 scaling with wavelength (higher tones closer to the center), and its angle
 scaling with its progress around the full octave (semitone raises in pitch are
