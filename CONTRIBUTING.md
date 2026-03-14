@@ -28,9 +28,9 @@ $ python -m unittest -v testname # play one test
 and style checks/linting on every push and pull request to the `main` branch.
 
 **Publishing**: A GitHub Action publishes to PyPI whenever we push a new
-version tag to main. If that fails, however, we can publish manually via
-`poetry build; poetry publish`. Manual publication requires the dev to
-have configured poetry with a PyPI API token.
+version tag to main. Note, keep pyproject.toml version in sync with git tags.
+If auto publish fails we can publish manually via `poetry publish --build`.
+Manual publication requires dev to configure poetry with a PyPI API token.
 
 **Dependency Management**: We use poetry. Some common gestures:
 
