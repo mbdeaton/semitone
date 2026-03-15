@@ -1,22 +1,27 @@
-[tool.poetry]
+[project]
 name = "semitone"
 version = "0.4.0"
 description = "Geometric representations of tones and chords"
-authors = ["Brett Deaton <brett.deaton@gmail.com>"]
-license = "GPL-3.0-or-later"
 readme = "README.md"
-repository = "https://github.com/mbdeaton/semitone"
+requires-python = ">=3.10"
+license = { text = "GPL-3.0-or-later" }
+authors = [
+  { name = "Brett Deaton", email = "brett.deaton@gmail.com" }
+]
 keywords = ["music theory", "chord", "scale", "frequency", "visualization"]
+dependencies = [
+  "pandas>=2.2.1",
+  "plotly>=5.19.0",
+  "kaleido>=0.2.1",
+]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-pandas = "^2.2.1"
-plotly = "^5.19.0"
-kaleido = "^0.2.1"
-jupyter = { version = "^1.0.0", optional = true }
+[project.optional-dependencies]
+notebooks = [
+  "jupyter>=1.0.0"
+]
 
-[tool.poetry.extras]
-notebooks = ["jupyter"]
+[project.urls]
+Repository = "https://github.com/mbdeaton/semitone"
 
 [tool.poetry.group.dev.dependencies]
 pylint = "^3.0.4"
@@ -24,5 +29,5 @@ mypy = "^1.8.0"
 black = "^24.2.0"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.8.0"]
 build-backend = "poetry.core.masonry.api"
