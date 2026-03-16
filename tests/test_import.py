@@ -48,6 +48,7 @@ class TestImport(unittest.TestCase):
                 mod = importlib.import_module(name)
                 # sanity check: importlib returned a module object
                 self.assertIsNotNone(mod)
+                self.assertEqual(mod.__name__, name)
 
     def test_package_exports(self):
         pkg = importlib.import_module("semitone")

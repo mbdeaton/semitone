@@ -2,33 +2,47 @@ name: Style
 
 on:
   push:
-    branches: [main]
+    branches: ["main"]
   pull_request:
-    branches: [main]
+    branches: ["main"]
 
 jobs:
   style-lint-type:
     runs-on: ubuntu-latest
+
     env:
       CHECK_DIRS: "semitone tests demos"
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.10"
+          cache: "pip"
+
       - name: Install Poetry
-        uses: snok/install-poetry@v1
-        with:
-          version: 1.7.1
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-      - name: Install dependencies (Poetry)
-        run: poetry install --no-interaction
-      - name: Run code formatter (Black)
+        run: pip install poetry
+
+      - name: Configure Poetry
+        run: poetry config virtualenvs.in-project true
+
+      - name: Validate project metadata
+        run: poetry check
+
+      - name: Verify lockfile is up to date
+        run: |
+          poetry lock
+          git diff --exit-code poetry.lock
+
+      - name: Install dependencies
+        run: poetry install --no-interaction --no-root --sync
+
+      - name: Run formatter check (Black)
         run: poetry run black --check --diff --line-length 80 $CHECK_DIRS
-      - name: Run static code linter (Pylint)
+
+      - name: Run linter (Pylint)
         run: poetry run pylint $CHECK_DIRS
-      - name: Run static type checker (Mypy)
+
+      - name: Run type checker (Mypy)
         run: poetry run mypy --ignore-missing-imports $CHECK_DIRS
