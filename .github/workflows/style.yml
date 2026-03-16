@@ -27,14 +27,16 @@ jobs:
       - name: Configure Poetry
         run: poetry config virtualenvs.in-project true
 
-      - name: Install dependencies
-        run: poetry install --no-interaction --no-root
-
-      - name: Verify lockfile
-        run: poetry lock --check
-
       - name: Validate project metadata
         run: poetry check
+
+      - name: Verify lockfile is up to date
+        run: |
+          poetry lock --no-update
+          git diff --exit-code poetry.lock
+
+      - name: Install dependencies
+        run: poetry install --no-interaction --no-root
 
       - name: Run formatter check (Black)
         run: poetry run black --check --diff --line-length 80 $CHECK_DIRS
