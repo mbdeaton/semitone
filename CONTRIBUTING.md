@@ -1,16 +1,59 @@
 # Contributing Guidelines
 
+## Quick start for contributors
+
+1. **Clone the repository.**
+
+   ```bash
+   git clone https://github.com/mbdeaton/semitone.git
+   cd semitone
+   ```
+
+2. **Install dependencies.**
+   We use Poetry for dependency management.
+
+   ```bash
+   poetry install
+   ```
+
+3. **Activate the development environment.**
+
+   ```bash
+   eval $(poetry env activate)
+   ```
+
+4. **Run the linters and type checker.**
+
+   ```bash
+   ./check-style.sh
+   ```
+
+5. **Make your changes and commit.**
+   Create a branch, make changes, and push to GitHub.
+
+   ```bash
+   git checkout -b my-feature
+   git commit -am "Describe your change"
+   git push origin my-feature
+   ```
+
+6. **Submit a pull request.**
+   Open a PR on GitHub and describe the motivation and scope of your change.
+
+
+## Details
+
 **Style**: We conform to PEP-8 and where that is silent we follow the
 [Google style guide](https://google.github.io/styleguide/pyguide.html).
 We also use type hints.
 
-Style's enforced with `black`, type-hinting with `mypy`, linting with `pylint`
+Style is enforced with `black`, type-hinting with `mypy`, linting with `pylint`
 which is configured to the Google pylintrc (with a few minor adjustments).
 
 To check conformance locally, from within a poetry shell, invoke
 
 ```bash
-$ ./check-style.sh
+./check-style.sh
 ```
 
 **Testing**: We use the unittest framework. Tests are all feature tests,
@@ -20,30 +63,30 @@ to represent the corresponding user story of "I can [verb phrase]". To run
 tests invoke
 
 ```bash
-$ python -m unittest -v          # play all tests
-$ python -m unittest -v testname # play one test
+poetry run python -m unittest -v          # play all tests
+poetry run python -m unittest -v testname # play one test
 ```
 
 **Continuous Integration**: We use GitHub Actions to automatically run tests
-and style checks/linting on every push and pull request to the `main` branch.
+and style checks/linting on every push and pull request to `main`.
 
-**Publishing**: A GitHub Action publishes to PyPI whenever we push a new
-version tag to main. Note, keep pyproject.toml version in sync with git tags.
-If auto publish fails we can publish manually via `poetry publish --build`.
-Manual publication requires dev to configure poetry with a PyPI API token.
+**Publishing**: A GitHub Action publishes to PyPI whenever a new version tag is
+pushed to `main`. Ensure the version in `pyproject.toml` matches the git tag.
 
-**Dependency Management**: We use poetry. Some common gestures:
+If auto publish fails we can publish manually via
+`poetry build; poetry publish`.
+Manual publication requires configuring poetry with a PyPI API token.
+
+**Dependency Management**: We use poetry. Common gestures:
 
 ```bash
-$ poetry shell    # activate the virtual environment
-$ code .          # open vscode within this venv
-$ poetry add X --group dev # add a dev dependency X
-$ poetry add X --optional # add optional dependency to main group note, you
-                  # also need to manually add it to a named group under
-                  # tool.poetry.extras
-$ poetry install  # install the dependencies in pyproject.toml or poetry.lock
-$ poetry install -E notebooks # install the extra dependencies for use of
-                  # interactive notebooks
+poetry install      # create the virtual environent and install dependencies
+poetry env activate # print the command to activate the virtual environment
+poetry run COMMAND  # run a command within this environment
+code .              # open VS Code within this environment
+poetry install -E notebooks # install extra dependencies to use notebooks
+poetry add X             # add runtime dependency X
+poetry add --group dev X # add development dependency X
 ```
 
 **Backlog**: A list of pending tasks lives in FUTURE.md.
