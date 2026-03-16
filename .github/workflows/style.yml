@@ -32,7 +32,7 @@ jobs:
 
       - name: Verify lockfile is up to date
         run: |
-          poetry lock --no-update
+          poetry lock
           git diff --exit-code poetry.lock
 
       - name: Install dependencies
