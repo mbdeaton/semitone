@@ -9,7 +9,7 @@ Published at [pypi.org/project/semitone](https://pypi.org/project/semitone).
 For full demos, see the notebooks in `demos/`.
 
 Install with pip:
-```sh
+```bash
 pip install semitone
 ```
 
