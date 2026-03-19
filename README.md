@@ -1,6 +1,6 @@
 # Semitone
-A Python package to compute frequencies, scales, and chords, and to represent
-them geometrically.
+A Python package to compute frequencies, scales, and chords in different tuning
+systems, and to represent their relationships through geometry.
 
 Published at [pypi.org/project/semitone](https://pypi.org/project/semitone).
 
