@@ -1,5 +1,6 @@
 # Semitone
-A Python package to represent tones, scales, and chords geometrically.
+A Python package to compute frequencies, scales, and chords in different tuning
+systems, and to represent their relationships through geometry.
 
 Published at [pypi.org/project/semitone](https://pypi.org/project/semitone).
 
@@ -8,7 +9,7 @@ Published at [pypi.org/project/semitone](https://pypi.org/project/semitone).
 For full demos, see the notebooks in `demos/`.
 
 Install with pip:
-```sh
+```bash
 pip install semitone
 ```
 
@@ -34,7 +35,7 @@ fig.show()
 
 
 ### Music and Geometry
-Each tone is represented as a point on a logarithmic spiral, with its radius
+Each tone may be represented as a point on a logarithmic spiral, with its radius
 scaling with wavelength (higher tones closer to the center), and its angle
 scaling with its progress around the full octave (semitone raises in pitch are
 30 deg clockwise rotations).
