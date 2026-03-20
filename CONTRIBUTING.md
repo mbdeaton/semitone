@@ -70,8 +70,14 @@ poetry run python -m unittest -v testname # play one test
 **Continuous Integration**: We use GitHub Actions to automatically run tests
 and style checks/linting on every push and pull request to `main`.
 
-**Publishing**: A GitHub Action publishes to PyPI whenever a new version tag is
-pushed to `main`. Ensure the version in `pyproject.toml` matches the git tag.
+**Publishing**: Release is automated.
+
+1. Bump `project.version` in `pyproject.toml` in a PR.
+2. Merge to `main`.
+3. `tag-release.yml` action creates/pushes `vX.Y.Z` (if missing).
+4. `publish.yml` action runs on that tag and publishes to PyPI.
+
+Do not create/push release tags manually.
 
 If auto publish fails we can publish manually via
 `poetry build; poetry publish`.
