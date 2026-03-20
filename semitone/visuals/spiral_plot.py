@@ -5,16 +5,7 @@ import plotly.graph_objects as go
 import pandas as pd
 from .. import Scale, EqualTempered
 from . import SpiralScale
-
-_MARKER_SYMBOLS = (
-    "circle",
-    "star",
-    "triangle-down",
-)
-_MARKER_SIZE = 12
-_MARKER_OPACITY = 0.5
-_MARKER_LINE_WIDTH = 1
-_MARKER_LINE_COLOR = "white"
+from ._spiral_plot_style import SpiralPlotStyle, DEFAULT_SPIRAL_PLOT_STYLE
 
 
 class SpiralPlot:
@@ -26,7 +17,7 @@ class SpiralPlot:
         octaves_below: int = 0,
         octaves_above: int = 0,
     ) -> go.Figure:
-        """Render the spiral representation of scale(s) in a polar plot.
+        """Render one or more scales as a spiral polar plot.
 
         Args:
             scales (list[Scale]): one or more scales to plot,
@@ -36,12 +27,23 @@ class SpiralPlot:
         Returns:
             a plotly graph_objects.Figure
         """
-        big_df = SpiralPlot._generate_data_for_all_scales(
+        combined_df = SpiralPlot._generate_data_for_all_scales(
             scales, octaves_below, octaves_above
         )
+        key = scales[0].key_name
 
-        fig = px.scatter_polar(
-            big_df,
+        fig = SpiralPlot._build_base_figure(combined_df)
+        SpiralPlot._apply_trace_style(fig, DEFAULT_SPIRAL_PLOT_STYLE)
+        SpiralPlot._apply_layout_style(
+            fig, combined_df, key, DEFAULT_SPIRAL_PLOT_STYLE
+        )
+        return fig
+
+    @staticmethod
+    def _build_base_figure(combined_df: pd.DataFrame) -> go.Figure:
+        """Create the base polar scatter figure from prepared plot data."""
+        return px.scatter_polar(
+            combined_df,
             r="wavelength",
             theta="angle",
             color="name",
@@ -49,39 +51,53 @@ class SpiralPlot:
             hover_name="name",
         )
 
+    @staticmethod
+    def _apply_trace_style(fig: go.Figure, style: SpiralPlotStyle) -> None:
+        """Apply marker-level style settings to each series trace."""
         for i, trace in enumerate(fig.data):
             trace.update(
-                marker_symbol=_MARKER_SYMBOLS[i % len(_MARKER_SYMBOLS)],
-                marker_size=_MARKER_SIZE,
-                marker_opacity=_MARKER_OPACITY,
-                marker_line_width=_MARKER_LINE_WIDTH,
-                marker_line_color=_MARKER_LINE_COLOR,
+                marker_symbol=style.marker_symbols[i % len(style.marker_symbols)],
+                marker_size=style.marker_size,
+                marker_opacity=style.marker_opacity,
+                marker_line_width=style.marker_line_width,
+                marker_line_color=style.marker_line_color,
             )
 
-        key = scales[0].key_name
-        max_rad = big_df["wavelength"].max()
+    @staticmethod
+    def _build_angular_tick_labels(key: str) -> tuple[str, ...]:
+        """Return note labels used for angular axis ticks."""
+        return EqualTempered(key).note_names_including_enharmonics()
+
+    @staticmethod
+    def _apply_layout_style(
+        fig: go.Figure,
+        combined_df: pd.DataFrame,
+        key: str,
+        style: SpiralPlotStyle,
+    ) -> None:
+        """Apply layout and axis styling to the figure."""
+        max_wavelength = combined_df["wavelength"].max()
+        angular_tick_labels = SpiralPlot._build_angular_tick_labels(key)
+
         fig.update_layout(
-            width=600,
-            height=600,
+            width=style.width,
+            height=style.height,
             template=None,
-            legend_title_text="Scale",
+            legend_title_text=style.legend_title_text,
             polar=dict(
                 radialaxis=dict(
-                    range=[0, max_rad],
+                    range=[0, max_wavelength],
                     showticklabels=False,
                     showgrid=False,
                     showline=False,
                     ticks="",
                 ),
                 angularaxis=dict(
-                    tickvals=tuple(range(0, 360, 30)),
-                    ticktext=EqualTempered(
-                        key
-                    ).note_names_including_enharmonics(),
+                    tickvals=style.angular_tick_values,
+                    ticktext=angular_tick_labels,
                 ),
             ),
         )
-        return fig
 
     @staticmethod
     def _generate_data_for_all_scales(
@@ -89,7 +105,7 @@ class SpiralPlot:
         octaves_below: int,
         octaves_above: int,
     ) -> pd.DataFrame:
-        """Return a combined dataframe of polar plot data for multiple scales.
+        """Return combined polar plot data for one or more extended scales.
 
         Each input Scale is first expanded by the requested number of octaves,
         converted to polar coordinates, and then concatenated into a single
