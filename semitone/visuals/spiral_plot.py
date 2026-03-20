@@ -41,7 +41,15 @@ class SpiralPlot:
 
     @staticmethod
     def _build_base_figure(combined_df: pd.DataFrame) -> go.Figure:
-        """Create the base polar scatter figure from prepared plot data."""
+        """Create the base polar scatter figure from prepared plot data.
+
+        Args:
+            combined_df (pandas.DataFrame): plot-ready scale data with polar
+                columns used by plotly.express.scatter_polar
+
+        Returns:
+            a plotly graph_objects.Figure with one trace per scale
+        """
         return px.scatter_polar(
             combined_df,
             r="wavelength",
@@ -53,7 +61,13 @@ class SpiralPlot:
 
     @staticmethod
     def _apply_trace_style(fig: go.Figure, style: SpiralPlotStyle) -> None:
-        """Apply marker-level style settings to each series trace."""
+        """Apply marker-level style settings to each series trace.
+
+        Args:
+            fig (plotly.graph_objects.Figure): figure whose traces should be
+                updated
+            style (SpiralPlotStyle): visual style settings for trace markers
+        """
         for i, trace in enumerate(fig.data):
             trace.update(
                 marker_symbol=style.marker_symbols[
@@ -67,7 +81,14 @@ class SpiralPlot:
 
     @staticmethod
     def _build_angular_tick_labels(key: str) -> tuple[str, ...]:
-        """Return note labels used for angular axis ticks."""
+        """Return note labels used for angular axis ticks.
+
+        Args:
+            key (str): tonic used to construct equal-tempered note names
+
+        Returns:
+            tuple[str, ...]: note names (including enharmonics) for one octave
+        """
         return EqualTempered(key).note_names_including_enharmonics()
 
     @staticmethod
@@ -77,7 +98,15 @@ class SpiralPlot:
         key: str,
         style: SpiralPlotStyle,
     ) -> None:
-        """Apply layout and axis styling to the figure."""
+        """Apply layout and axis styling to the figure.
+
+        Args:
+            fig (plotly.graph_objects.Figure): figure to configure
+            combined_df (pandas.DataFrame): plotted data used to infer radial
+                axis bounds
+            key (str): tonic used to derive angular tick labels
+            style (SpiralPlotStyle): layout and axis style settings
+        """
         max_wavelength = combined_df["wavelength"].max()
         angular_tick_labels = SpiralPlot._build_angular_tick_labels(key)
 
