@@ -26,8 +26,8 @@
 4. **Run the linters and type checker.**
 
    ```bash
-   ./check-style.sh      # Linux
-   bash ./check-style.sh # Windows
+   ./check-style.sh     # Linux
+   poetry run black ... # Windows: run check-style.sh black, pylint, mypy calls
    ```
 
 5. **Make your changes and commit.**
