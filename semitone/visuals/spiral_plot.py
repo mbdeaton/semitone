@@ -51,6 +51,8 @@ class SpiralPlot:
                     range=[0, max_rad],
                     showticklabels=False,
                     showgrid=False,
+                    showline=False,
+                    zeroline=False,
                     ticks="",
                 ),
                 angularaxis=dict(
