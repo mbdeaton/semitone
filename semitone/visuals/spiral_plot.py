@@ -56,7 +56,9 @@ class SpiralPlot:
         """Apply marker-level style settings to each series trace."""
         for i, trace in enumerate(fig.data):
             trace.update(
-                marker_symbol=style.marker_symbols[i % len(style.marker_symbols)],
+                marker_symbol=style.marker_symbols[
+                    i % len(style.marker_symbols)
+                ],
                 marker_size=style.marker_size,
                 marker_opacity=style.marker_opacity,
                 marker_line_width=style.marker_line_width,

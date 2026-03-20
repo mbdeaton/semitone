@@ -121,4 +121,8 @@ class TestDraw(unittest.TestCase):
         graph_object = GraphObjectSpiralPlot(fig)
         symbols = graph_object.get_marker_symbols()
         self.assertEqual(len(symbols), 3)
-        self.assertEqual(len(set(symbols)), 3, "Each scale should have a distinct marker symbol")
+        self.assertEqual(
+            len(set(symbols)),
+            3,
+            "Each scale should have a distinct marker symbol",
+        )
