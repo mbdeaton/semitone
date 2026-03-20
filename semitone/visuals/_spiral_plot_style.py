@@ -1,4 +1,4 @@
-"""Internal style defaults for SpiralPlot rendering."""
+"""SpiralPlotStyle"""
 
 from dataclasses import dataclass
 
