@@ -8,14 +8,13 @@ from . import SpiralScale
 
 _MARKER_SYMBOLS = (
     "circle",
-    "square",
-    "diamond",
-    "cross",
-    "triangle-up",
-    "triangle-down",
     "star",
-    "pentagon",
+    "triangle-down",
 )
+_MARKER_SIZE = 12
+_MARKER_OPACITY = 0.5
+_MARKER_LINE_WIDTH = 1
+_MARKER_LINE_COLOR = "white"
 
 
 class SpiralPlot:
@@ -51,7 +50,13 @@ class SpiralPlot:
         )
 
         for i, trace in enumerate(fig.data):
-            trace.update(marker_symbol=_MARKER_SYMBOLS[i % len(_MARKER_SYMBOLS)])
+            trace.update(
+                marker_symbol=_MARKER_SYMBOLS[i % len(_MARKER_SYMBOLS)],
+                marker_size=_MARKER_SIZE,
+                marker_opacity=_MARKER_OPACITY,
+                marker_line_width=_MARKER_LINE_WIDTH,
+                marker_line_color=_MARKER_LINE_COLOR,
+            )
 
         key = scales[0].key_name
         max_rad = big_df["wavelength"].max()
