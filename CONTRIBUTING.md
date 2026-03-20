@@ -19,13 +19,15 @@
 3. **Activate the development environment.**
 
    ```bash
-   eval $(poetry env activate)
+   eval $(poetry env activate)             # Linux
+   poetry env activate | Invoke-Expression # Windows
    ```
 
 4. **Run the linters and type checker.**
 
    ```bash
-   ./check-style.sh
+   ./check-style.sh      # Linux
+   bash ./check-style.sh # Windows
    ```
 
 5. **Make your changes and commit.**
