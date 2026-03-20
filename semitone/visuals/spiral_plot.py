@@ -6,6 +6,17 @@ import pandas as pd
 from .. import Scale, EqualTempered
 from . import SpiralScale
 
+_MARKER_SYMBOLS = (
+    "circle",
+    "square",
+    "diamond",
+    "cross",
+    "triangle-up",
+    "triangle-down",
+    "star",
+    "pentagon",
+)
+
 
 class SpiralPlot:
     """The graphical depiction of one or more scales as logarithmic spirals."""
@@ -39,6 +50,9 @@ class SpiralPlot:
             hover_name="name",
         )
 
+        for i, trace in enumerate(fig.data):
+            trace.update(marker_symbol=_MARKER_SYMBOLS[i % len(_MARKER_SYMBOLS)])
+
         key = scales[0].key_name
         max_rad = big_df["wavelength"].max()
         fig.update_layout(
@@ -69,37 +83,27 @@ class SpiralPlot:
         scales: tuple[Scale, ...],
         octaves_below: int,
         octaves_above: int,
-        radial_separation: float = 1.02,
     ) -> pd.DataFrame:
         """Return a combined dataframe of polar plot data for multiple scales.
 
         Each input Scale is first expanded by the requested number of octaves,
         converted to polar coordinates, and then concatenated into a single
-        dataframe suitable for plotting.  A small radial rescaling is applied
-        to every scale after the first, so identical tones do not perfectly
-        overlap on the plot.
+        dataframe suitable for plotting.
 
         Args:
             scales (list[Scale]): the set of scales to convert
             octaves_below, octaves_above (int): how many octaves to extend
                 outside each primary scale; defaults = don't extend
-            radial_separation (float): multiplicative factor applied to the
-                radii of each scale after the first; default = 1.02
 
         Returns:
             pandas.DataFrame; see SpiralScale.get_dataframe_copy() for details
         """
         overall_key = scales[0].principle
         frames = []
-        for i, scale in enumerate(scales):
+        for scale in scales:
             extended_scale = scale.extend(octaves_below, octaves_above)
             spiral_scale = SpiralScale(extended_scale, overall_key)
             df = spiral_scale.get_dataframe_copy()
-
-            # apply slight radial offset to distinguish overlaps
-            if i > 0:
-                df["wavelength"] *= radial_separation**i
-
             frames.append(df)
 
         return pd.concat(frames, ignore_index=True)
