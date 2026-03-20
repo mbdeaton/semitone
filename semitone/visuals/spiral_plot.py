@@ -52,7 +52,6 @@ class SpiralPlot:
                     showticklabels=False,
                     showgrid=False,
                     showline=False,
-                    zeroline=False,
                     ticks="",
                 ),
                 angularaxis=dict(
