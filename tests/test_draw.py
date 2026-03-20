@@ -12,7 +12,6 @@ class TestDraw(unittest.TestCase):
 
     TEST_TOL = 1e-5
     DEFAULT_PRINCIPLE_RADIUS = 1.0
-    DEFAULT_BASE_RESCALING_FACTOR = 1.02
 
     def test_see_all_tones_as_points_at_polar_positions(
         self,
@@ -45,7 +44,6 @@ class TestDraw(unittest.TestCase):
             principle_angle_deg=0.0,
             principle_radius=self.DEFAULT_PRINCIPLE_RADIUS,
             num_tones=12,
-            radial_rescaling=1.0,
         )
         df_expected_scale2 = self.generate_points_expected_chromatic(
             principle_angle_deg=120.0,
@@ -54,7 +52,6 @@ class TestDraw(unittest.TestCase):
                 / self.radial_rescale_factor(num_semitones=4)
             ),
             num_tones=12,
-            radial_rescaling=self.DEFAULT_BASE_RESCALING_FACTOR,
         )
         self.assertEqual(len(dfs_actual), 2)
         assert_frame_equal(
@@ -93,7 +90,6 @@ class TestDraw(unittest.TestCase):
         principle_angle_deg: float,
         principle_radius: float,
         num_tones: int,
-        radial_rescaling: float = 1.0,
     ) -> pd.DataFrame:
         """Return expected polar coords for a chromatic scale.
 
@@ -101,9 +97,6 @@ class TestDraw(unittest.TestCase):
             principle_angle_deg (float): angle of the principle tone, degrees
             principle_radius (float): radius of the principle tone
             num_tones (int): number of tones in the chromatic scale
-            radial_rescaling (float): multiplicative factor applied to all
-                radii of a single scale; built into SpiralPlot when multiple
-                scales are present on a single figure; default = 1.0
 
         Returns:
             pandas.DataFrame containing the polar coordinate tuples
@@ -116,6 +109,20 @@ class TestDraw(unittest.TestCase):
         points = []
         for i in range(num_tones):
             angle = (principle_angle_deg + (i * 30.0)) % 360
-            radius = principle_radius * pow(0.5, i / 12) * radial_rescaling
+            radius = principle_radius * pow(0.5, i / 12)
             points.append((radius, angle))
         return pd.DataFrame(points, columns=("wavelength", "angle"))
+
+    def test_see_multiple_scales_with_different_marker_symbols(self):
+        scale1 = st.Chromatic("C")
+        scale2 = st.Chromatic("E")
+        scale3 = st.Major("C")
+        fig = st.SpiralPlot.draw((scale1, scale2, scale3))
+        graph_object = GraphObjectSpiralPlot(fig)
+        symbols = graph_object.get_marker_symbols()
+        self.assertEqual(len(symbols), 3)
+        self.assertEqual(
+            len(set(symbols)),
+            3,
+            "Each scale should have a distinct marker symbol",
+        )

@@ -37,3 +37,11 @@ class GraphObjectSpiralPlot:
             )
             dataframes.append(df)
         return tuple(dataframes)
+
+    def get_marker_symbols(self) -> tuple[str, ...]:
+        """Return the marker symbol assigned to each trace in the plot.
+
+        Returns:
+            tuple of marker symbol strings, one per scale trace
+        """
+        return tuple(trace.marker.symbol for trace in self._figure.data)
